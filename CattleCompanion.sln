@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CattleCompanion", "CattleCompanion\CattleCompanion.csproj", "{4FF1AD16-2F38-45F9-8436-EC2F4468BFB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CattleCompanion.Tests", "CattleCompanion.Tests\CattleCompanion.Tests.csproj", "{AD844275-CF86-4838-8B8B-3157201F5AEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4FF1AD16-2F38-45F9-8436-EC2F4468BFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF1AD16-2F38-45F9-8436-EC2F4468BFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF1AD16-2F38-45F9-8436-EC2F4468BFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD844275-CF86-4838-8B8B-3157201F5AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD844275-CF86-4838-8B8B-3157201F5AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD844275-CF86-4838-8B8B-3157201F5AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD844275-CF86-4838-8B8B-3157201F5AEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
