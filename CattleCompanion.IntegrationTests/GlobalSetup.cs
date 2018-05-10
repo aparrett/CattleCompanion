@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Data.Entity.Migrations;
-using CattleCompanion.Models;
 using System.Linq;
+using CattleCompanion.Core.Models;
 
 namespace CattleCompanion.IntegrationTests
 {
