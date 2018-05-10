@@ -236,14 +236,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805080343224_InitialMigration.cs" />
-    <Compile Include="Migrations\201805080343224_InitialMigration.Designer.cs">
+    <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.cs" />
+    <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.Designer.cs">
       <DependentUpon>201805080343224_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Persistence\Migrations\Configuration.cs" />
+    <Compile Include="Core\Models\ApplicationUser.cs" />
+    <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Core\ViewModels\ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="Core\ViewModels\ExternalLoginListViewModel.cs" />
+    <Compile Include="Core\ViewModels\ForgotViewModel.cs" />
+    <Compile Include="Core\Models\ApplicationDbContext.cs" />
+    <Compile Include="Core\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Core\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Core\ViewModels\RegisterViewModel.cs" />
+    <Compile Include="Core\ViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
+    <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -307,6 +316,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Api\" />
+    <Folder Include="Core\Dtos\" />
+    <Folder Include="Core\Repositories\" />
+    <Folder Include="Models\" />
+    <Folder Include="Persistence\EntityConfigurations\" />
+    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -322,7 +337,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805080343224_InitialMigration.resx">
+    <EmbeddedResource Include="Persistence\Migrations\201805080343224_InitialMigration.resx">
       <DependentUpon>201805080343224_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
