@@ -1,4 +1,5 @@
 ﻿using CattleCompanion.Core.Models;
+using CattleCompanion.Persistence;
 using NUnit.Framework;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace CattleCompanion.IntegrationTests
         public void SetUp()
         {
             MigrateDbToLatestVersion();
+
+            Seed();
         }
 
         private static void MigrateDbToLatestVersion()

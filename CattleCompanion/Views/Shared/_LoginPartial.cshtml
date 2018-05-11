@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Account" })
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-5" }))
     {
         @Html.AntiForgeryToken()

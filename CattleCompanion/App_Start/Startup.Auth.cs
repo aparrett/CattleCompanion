@@ -1,5 +1,6 @@
 ﻿using System;
 using CattleCompanion.Core.Models;
+using CattleCompanion.Persistence;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

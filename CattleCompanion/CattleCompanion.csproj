@@ -227,18 +227,35 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FarmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Core\IApplicationDbContext.cs" />
+    <Compile Include="Core\Models\Farm.cs" />
+    <Compile Include="Core\Models\UserFarm.cs" />
+    <Compile Include="Core\ViewModels\FarmFormViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\EntityConfigurations\FarmConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserFarmConfiguration.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.cs" />
     <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.Designer.cs">
       <DependentUpon>201805080343224_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805110201065_AddFarms.cs" />
+    <Compile Include="Persistence\Migrations\201805110201065_AddFarms.Designer.cs">
+      <DependentUpon>201805110201065_AddFarms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805110259099_AddUserFarms.cs" />
+    <Compile Include="Persistence\Migrations\201805110259099_AddUserFarms.Designer.cs">
+      <DependentUpon>201805110259099_AddUserFarms.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
@@ -246,13 +263,16 @@
     <Compile Include="Core\ViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Core\ViewModels\ExternalLoginListViewModel.cs" />
     <Compile Include="Core\ViewModels\ForgotViewModel.cs" />
-    <Compile Include="Core\Models\ApplicationDbContext.cs" />
+    <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Core\ViewModels\LoginViewModel.cs" />
     <Compile Include="Core\ViewModels\ManageViewModels.cs" />
     <Compile Include="Core\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Core\ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="Persistence\Repositories\FarmRepository.cs" />
+    <Compile Include="Core\Repositories\IFarmRepository.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -313,15 +333,13 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_CleanLayout.cshtml" />
+    <Content Include="Views\Farms\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Api\" />
     <Folder Include="Core\Dtos\" />
-    <Folder Include="Core\Repositories\" />
-    <Folder Include="Models\" />
-    <Folder Include="Persistence\EntityConfigurations\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -339,6 +357,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Persistence\Migrations\201805080343224_InitialMigration.resx">
       <DependentUpon>201805080343224_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805110201065_AddFarms.resx">
+      <DependentUpon>201805110201065_AddFarms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805110259099_AddUserFarms.resx">
+      <DependentUpon>201805110259099_AddUserFarms.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

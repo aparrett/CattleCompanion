@@ -1,4 +1,5 @@
 using CattleCompanion.Core.Models;
+using CattleCompanion.Persistence;
 
 namespace CattleCompanion.Migrations
 {
