@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "btn btn-outline-primary" }))
+    @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Account" })
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-5" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
     }
 }
 else

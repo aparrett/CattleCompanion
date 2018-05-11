@@ -27,19 +27,35 @@
     background-color: #a0410c;
     border-color: #a0410c;
 }
-    .btn-primary:hover {
-        color: #fff;
-        background-color: #652908;
-        border-color: #652908;
-    }
 
-    .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
-        color: #fff;
-        background-color: #652908;
-        border-color: #652908;
-    }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #652908;
+    border-color: #652908;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #652908;
+    border-color: #652908;
+}
+
+a { color: #9f410bcf; }
+
+a:hover {
+    color: #a0410c;
+    text-decoration: underline;
+}
+
+.btn-outline-primary {
+    color: #a0410c;
+    background-color: transparent;
+    background-image: none;
+    border-color: #a0410c;
+}
 
 /* Login Page */
+
 .form-signin {
     width: 100%;
     max-width: 330px;
@@ -52,11 +68,13 @@
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .form-signin input[name="Password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
 .form-signin .form-control {
     position: relative;
     box-sizing: border-box;
@@ -64,6 +82,7 @@
     padding: 10px;
     font-size: 16px;
 }
+
 .center-content {
     display: -ms-flexbox;
     display: -webkit-box;
