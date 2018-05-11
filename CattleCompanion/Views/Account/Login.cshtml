@@ -2,11 +2,13 @@
 @model CattleCompanion.Core.ViewModels.LoginViewModel
 @{
     ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_CleanLayout.cshtml";
 }
 
-<div class="text-center">
+<div class="center-content text-center h-100">
     <section id="loginForm" class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h2 mb-3">Cattle Companion</h1>
+        <h2 class="h3 mb-3 font-weight-normal">Log In</h2>
         @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
         {
             @Html.AntiForgeryToken()
@@ -26,7 +28,7 @@
             <button type="submit" value="Log in" class="btn btn-lg btn-primary btn-block">Sign In</button>
             <p class="my-3"></p>
             @Html.ActionLink("Register", "Register", new {area = ""})
-       
+
         @* Enable this once you have account confirmation enabled for password reset functionality
         <p>
             @Html.ActionLink("Forgot your password?", "ForgotPassword")
