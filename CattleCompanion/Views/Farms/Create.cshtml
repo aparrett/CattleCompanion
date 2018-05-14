@@ -19,6 +19,10 @@
         @Html.TextBoxFor(m => m.Url, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(m => m.Url)
     </div>
+    <div class="form-check">
+        @Html.CheckBoxFor(m => m.IsDefault, new { @class = "form-check-input" })
+        <label class="form-check-label mb-3" for="IsDefault">Make this my default farm</label>
+    </div>
     <button type="submit" class="btn btn-primary btn-sm">Save</button>
 }
 

@@ -40,7 +40,8 @@ namespace CattleCompanion.Controllers
             var userFarm = new UserFarm
             {
                 FarmId = farm.Id,
-                UserId = User.Identity.GetUserId()
+                UserId = User.Identity.GetUserId(),
+                IsDefault = viewModel.IsDefault
             };
 
             _unitOfWork.Farms.Add(farm);
