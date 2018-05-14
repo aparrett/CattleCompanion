@@ -238,6 +238,7 @@
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\Farm.cs" />
     <Compile Include="Core\Models\UserFarm.cs" />
+    <Compile Include="Core\Repositories\IUserFarmRepository.cs" />
     <Compile Include="Core\ViewModels\FarmFormViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,6 +281,7 @@
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Persistence\Repositories\FarmRepository.cs" />
     <Compile Include="Core\Repositories\IFarmRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserFarmRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -1,6 +1,7 @@
 ﻿using CattleCompanion.Core;
 using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
+using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace CattleCompanion.Controllers
@@ -15,7 +16,6 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Route("farms/new")]
         public ActionResult Create()
         {
             var viewModel = new FarmFormViewModel();
@@ -37,7 +37,15 @@ namespace CattleCompanion.Controllers
                 Url = viewModel.Url
             };
 
+            var userFarm = new UserFarm
+            {
+                FarmId = farm.Id,
+                UserId = User.Identity.GetUserId()
+            };
+
             _unitOfWork.Farms.Add(farm);
+            _unitOfWork.UserFarms.Add(userFarm);
+
             _unitOfWork.Complete();
 
             return RedirectToAction("Details", new { url = farm.Url });
