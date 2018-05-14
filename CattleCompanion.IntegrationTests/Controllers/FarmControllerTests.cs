@@ -3,10 +3,10 @@ using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
 using CattleCompanion.IntegrationTests.Extensions;
 using CattleCompanion.Persistence;
-using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace CattleCompanion.IntegrationTests.Controllers
 {
@@ -30,7 +30,7 @@ namespace CattleCompanion.IntegrationTests.Controllers
         }
 
         [Test, Isolated]
-        public void Create_WhenCalled_ShouldCreateANewFarm()
+        public void Create_WhenCalled_ShouldRedirectToFarmDetails()
         {
             var user = _context.Users.First();
 
@@ -43,16 +43,10 @@ namespace CattleCompanion.IntegrationTests.Controllers
                 Id = farm.Id,
                 Name = farm.Name,
                 Url = farm.Url
-            });
+            }) as RedirectToRouteResult;
 
-            foreach (var entity in _context.ChangeTracker.Entries())
-            {
-                entity.Reload();
-            }
-
-            var farmInDb = _context.Farms.SingleOrDefault(f => f.Id == farm.Id);
-            farmInDb.Name.Should().Be("Farm1");
-            farmInDb.Url.Should().Be("Farm1");
+            Assert.That(result.RouteValues["action"], Is.EqualTo("Details"));
+            Assert.That(result.RouteValues["url"], Is.EqualTo(farm.Url));
         }
     }
 }

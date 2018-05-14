@@ -1,4 +1,6 @@
 ﻿using CattleCompanion.Core.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace CattleCompanion.Persistence.EntityConfigurations
@@ -11,7 +13,10 @@ namespace CattleCompanion.Persistence.EntityConfigurations
                 .IsRequired();
 
             Property(f => f.Url)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR")
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
         }
     }
 }

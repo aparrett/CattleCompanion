@@ -257,6 +257,14 @@
     <Compile Include="Persistence\Migrations\201805110259099_AddUserFarms.Designer.cs">
       <DependentUpon>201805110259099_AddUserFarms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201805140053431_FarmUrlAnnotations.cs" />
+    <Compile Include="Persistence\Migrations\201805140053431_FarmUrlAnnotations.Designer.cs">
+      <DependentUpon>201805140053431_FarmUrlAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805140054200_FarmUrlIsUnique.cs" />
+    <Compile Include="Persistence\Migrations\201805140054200_FarmUrlIsUnique.Designer.cs">
+      <DependentUpon>201805140054200_FarmUrlIsUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -335,6 +343,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_CleanLayout.cshtml" />
     <Content Include="Views\Farms\Create.cshtml" />
+    <Content Include="Views\Farms\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,6 +372,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805110259099_AddUserFarms.resx">
       <DependentUpon>201805110259099_AddUserFarms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805140053431_FarmUrlAnnotations.resx">
+      <DependentUpon>201805140053431_FarmUrlAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805140054200_FarmUrlIsUnique.resx">
+      <DependentUpon>201805140054200_FarmUrlIsUnique.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

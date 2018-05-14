@@ -39,7 +39,12 @@ namespace CattleCompanion.Controllers
             _unitOfWork.Farms.Add(farm);
             _unitOfWork.Complete();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Details", new { url = farm.Url });
+        }
+
+        public ActionResult Details(string url)
+        {
+            return View();
         }
     }
 }
