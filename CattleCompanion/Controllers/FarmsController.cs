@@ -15,6 +15,7 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Route("farms/new")]
         public ActionResult Create()
         {
             var viewModel = new FarmFormViewModel();
@@ -42,6 +43,7 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { url = farm.Url });
         }
 
+        [Route("farm/{url}")]
         public ActionResult Details(string url)
         {
             return View();
