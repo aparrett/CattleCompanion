@@ -55,7 +55,17 @@ namespace CattleCompanion.Controllers
         [Route("farm/{url}")]
         public ActionResult Details(string url)
         {
-            return View();
+            var farm = _unitOfWork.Farms.GetByUrl(url);
+            if (farm == null)
+                return HttpNotFound();
+
+            var userFarm = _unitOfWork.UserFarms.GetUserFarm(farm.Id, User.Identity.GetUserId());
+            if (userFarm == null)
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            return View(farm);
         }
     }
 }

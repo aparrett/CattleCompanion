@@ -19,6 +19,11 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Farms.SingleOrDefault(f => f.Id == id);
         }
 
+        public Farm GetByUrl(string url)
+        {
+            return _context.Farms.SingleOrDefault(f => f.Url == url);
+        }
+
         public void Add(Farm farm)
         {
             _context.Farms.Add(farm);
