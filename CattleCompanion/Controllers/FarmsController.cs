@@ -2,6 +2,8 @@
 using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CattleCompanion.Controllers
@@ -31,6 +33,7 @@ namespace CattleCompanion.Controllers
                 return View("Create", viewModel);
             }
 
+            var userId = User.Identity.GetUserId();
             var farm = new Farm
             {
                 Name = viewModel.Name,
@@ -40,13 +43,20 @@ namespace CattleCompanion.Controllers
             var userFarm = new UserFarm
             {
                 FarmId = farm.Id,
-                UserId = User.Identity.GetUserId()
+                UserId = userId
             };
 
             _unitOfWork.Farms.Add(farm);
             _unitOfWork.UserFarms.Add(userFarm);
-
             _unitOfWork.Complete();
+
+            if (viewModel.IsDefault)
+            {
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(userId);
+                user.DefaultFarmId = farm.Id;
+                userManager.Update(user);
+            }
 
             return RedirectToAction("Details", new { url = farm.Url });
         }
