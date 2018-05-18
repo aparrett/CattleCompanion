@@ -266,6 +266,10 @@
     <Compile Include="Persistence\Migrations\201805140054200_FarmUrlIsUnique.Designer.cs">
       <DependentUpon>201805140054200_FarmUrlIsUnique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.cs" />
+    <Compile Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.Designer.cs">
+      <DependentUpon>201805181413108_MoveDefaultFarmToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805140054200_FarmUrlIsUnique.resx">
       <DependentUpon>201805140054200_FarmUrlIsUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.resx">
+      <DependentUpon>201805181413108_MoveDefaultFarmToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

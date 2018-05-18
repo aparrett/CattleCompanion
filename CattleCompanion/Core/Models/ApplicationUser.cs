@@ -9,6 +9,7 @@ namespace CattleCompanion.Core.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<UserFarm> UserFarms { get; set; }
+        public int DefaultFarmId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
