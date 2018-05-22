@@ -20,13 +20,11 @@ namespace CattleCompanion.Controllers
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindById(User.Identity.GetUserId());
-            if (user.DefaultFarmId > 0)
-            {
-                var farm = _unitOfWork.Farms.GetFarm(user.DefaultFarmId);
-                return RedirectToAction("Details", "Farms", new { url = farm.Url });
-            }
+            var farm = _unitOfWork.Farms.GetFarm(user.DefaultFarmId);
 
-            return RedirectToAction("Create", "Farms");
+            return farm != null
+                ? RedirectToAction("Details", "Farms", new { url = farm.Url })
+                : RedirectToAction("Create", "Farms");
         }
 
         public ActionResult About()
