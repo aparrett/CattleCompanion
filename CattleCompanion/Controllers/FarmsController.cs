@@ -50,10 +50,11 @@ namespace CattleCompanion.Controllers
             _unitOfWork.UserFarms.Add(userFarm);
             _unitOfWork.Complete();
 
-            if (viewModel.IsDefault)
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(userId);
+
+            if (viewModel.IsDefault || user.DefaultFarmId == 0)
             {
-                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = userManager.FindById(userId);
                 user.DefaultFarmId = farm.Id;
                 userManager.Update(user);
             }
