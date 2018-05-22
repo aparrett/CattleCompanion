@@ -16,7 +16,12 @@ namespace CattleCompanion.Persistence.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR")
-                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("UC_Url")
+                    {
+                        IsUnique = true
+                    })
+            );
         }
     }
 }

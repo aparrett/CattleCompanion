@@ -237,6 +237,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\Farm.cs" />
+    <Compile Include="Core\Models\UniqueFarmColumn.cs" />
     <Compile Include="Core\Models\UserFarm.cs" />
     <Compile Include="Core\Repositories\IUserFarmRepository.cs" />
     <Compile Include="Core\ViewModels\FarmFormViewModel.cs" />
@@ -269,6 +270,10 @@
     <Compile Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.cs" />
     <Compile Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.Designer.cs">
       <DependentUpon>201805181413108_MoveDefaultFarmToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805212345230_ActuallyAddUniqueContraintToFarmUrl.cs" />
+    <Compile Include="Persistence\Migrations\201805212345230_ActuallyAddUniqueContraintToFarmUrl.Designer.cs">
+      <DependentUpon>201805212345230_ActuallyAddUniqueContraintToFarmUrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
@@ -387,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805181413108_MoveDefaultFarmToUser.resx">
       <DependentUpon>201805181413108_MoveDefaultFarmToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805212345230_ActuallyAddUniqueContraintToFarmUrl.resx">
+      <DependentUpon>201805212345230_ActuallyAddUniqueContraintToFarmUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [UniqueFarmColumn]
         public string Url { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CattleCompanion.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CattleCompanion.Core.ViewModels
 {
@@ -7,6 +8,7 @@ namespace CattleCompanion.Core.ViewModels
         public int Id { get; set; }
 
         [Required]
+        [UniqueFarmColumn]
         public string Url { get; set; }
 
         [Required]

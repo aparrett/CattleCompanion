@@ -1,4 +1,7 @@
 ﻿using CattleCompanion.Core;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CattleCompanion.Controllers
@@ -15,7 +18,15 @@ namespace CattleCompanion.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(User.Identity.GetUserId());
+            if (user.DefaultFarmId > 0)
+            {
+                var farm = _unitOfWork.Farms.GetFarm(user.DefaultFarmId);
+                return RedirectToAction("Details", "Farms", new { url = farm.Url });
+            }
+
+            return RedirectToAction("Create", "Farms");
         }
 
         public ActionResult About()
