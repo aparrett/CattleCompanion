@@ -242,6 +242,7 @@
     <Compile Include="Core\Models\UniqueFarmColumn.cs" />
     <Compile Include="Core\Models\UserFarm.cs" />
     <Compile Include="Core\Repositories\IUserFarmRepository.cs" />
+    <Compile Include="Core\ViewModels\CowFormViewModel.cs" />
     <Compile Include="Core\ViewModels\FarmFormViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -362,12 +363,12 @@
     <Content Include="Views\Shared\_CleanLayout.cshtml" />
     <Content Include="Views\Farms\Create.cshtml" />
     <Content Include="Views\Farms\Details.cshtml" />
+    <Content Include="Views\Cattle\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Api\" />
     <Folder Include="Core\Dtos\" />
-    <Folder Include="Views\Cattle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

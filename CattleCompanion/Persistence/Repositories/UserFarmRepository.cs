@@ -25,6 +25,11 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.UserFarms.Where(uf => uf.FarmId == farmId).ToList();
         }
 
+        public IEnumerable<Farm> GetFarms(string userId)
+        {
+            return _context.UserFarms.Where(uf => uf.UserId == userId).Select(uf => uf.Farm).ToList();
+        }
+
         public UserFarm GetUserFarm(int farmId, string userId)
         {
             return _context.UserFarms.SingleOrDefault(uf => uf.FarmId == farmId && uf.UserId == userId);

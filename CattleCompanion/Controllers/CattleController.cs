@@ -1,4 +1,6 @@
 ﻿using CattleCompanion.Core;
+using CattleCompanion.Core.ViewModels;
+using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
 namespace CattleCompanion.Controllers
@@ -13,9 +15,15 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //        public ViewResult Create()
-        //        {
-        //            return View(new cowFormViewModel());
-        //        }
+        public ViewResult Create()
+        {
+            var userId = User.Identity.GetUserId();
+            var farms = _unitOfWork.UserFarms.GetFarms(userId);
+            var viewModel = new CowFormViewModel()
+            {
+                Farms = farms
+            };
+            return View(viewModel);
+        }
     }
 }

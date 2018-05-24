@@ -1,0 +1,38 @@
+﻿@model CattleCompanion.Core.ViewModels.CowFormViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Cow</h2>
+
+@using (Html.BeginForm("Create", "Farms"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.GivenId)
+        @Html.TextBoxFor(m => m.GivenId, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.GivenId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender)
+        @Html.RadioButtonFor(m => m.Gender, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.Gender)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Farm)
+        @Html.DropDownListFor(m => m.Farm, new SelectList(Model.Farms, "Id", "Name"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Farm)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Birthday)
+        @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.Birthday)
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
