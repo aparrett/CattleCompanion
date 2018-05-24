@@ -20,9 +20,7 @@ namespace CattleCompanion.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = new FarmFormViewModel();
-
-            return View(viewModel);
+            return View(new FarmFormViewModel());
         }
 
         [HttpPost]
