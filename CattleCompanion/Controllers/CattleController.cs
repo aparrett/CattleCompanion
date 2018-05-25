@@ -16,7 +16,7 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public ViewResult Create()
+        public ViewResult Create(int? farmId = null)
         {
             var userId = User.Identity.GetUserId();
             var farms = _unitOfWork.UserFarms.GetFarms(userId);
@@ -24,6 +24,10 @@ namespace CattleCompanion.Controllers
             {
                 Farms = farms
             };
+
+            if (farmId != null)
+                viewModel.FarmId = (int)farmId;
+
             return View(viewModel);
         }
 
