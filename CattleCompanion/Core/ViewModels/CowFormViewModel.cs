@@ -14,7 +14,7 @@ namespace CattleCompanion.Core.ViewModels
         public string GivenId { get; set; }
 
         [Required]
-        public Farm Farm { get; set; }
+        public int FarmId { get; set; }
 
         public DateTime Birthday { get; set; }
 

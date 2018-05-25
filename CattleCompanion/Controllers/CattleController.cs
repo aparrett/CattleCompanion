@@ -1,4 +1,5 @@
 ﻿using CattleCompanion.Core;
+using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
@@ -24,6 +25,28 @@ namespace CattleCompanion.Controllers
                 Farms = farms
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CowFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", viewModel);
+            }
+
+            var cow = new Cow
+            {
+                Birthday = viewModel.Birthday,
+                FarmId = viewModel.FarmId,
+                GivenId = viewModel.GivenId,
+                Gender = viewModel.Gender
+            };
+
+            _unitOfWork.Cattle.Add(cow);
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Create");
         }
     }
 }
