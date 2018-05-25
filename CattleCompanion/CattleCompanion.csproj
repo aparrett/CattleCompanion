@@ -243,6 +243,7 @@
     <Compile Include="Core\Models\UserFarm.cs" />
     <Compile Include="Core\Repositories\IUserFarmRepository.cs" />
     <Compile Include="Core\ViewModels\CowFormViewModel.cs" />
+    <Compile Include="Core\ViewModels\FarmDetailsViewModel.cs" />
     <Compile Include="Core\ViewModels\FarmFormViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

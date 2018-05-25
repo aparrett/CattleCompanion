@@ -7,7 +7,7 @@ namespace CattleCompanion.Core.Models
         public int Id { get; set; }
         public string GivenId { get; set; }
         public int FarmId { get; set; }
-        public Farm Farm { get; set; }
+        public virtual Farm Farm { get; set; }
         public int MotherId { get; set; }
         public int FatherId { get; set; }
         public DateTime Birthday { get; set; }
