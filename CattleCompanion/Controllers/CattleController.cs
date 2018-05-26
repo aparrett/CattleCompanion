@@ -50,7 +50,7 @@ namespace CattleCompanion.Controllers
             _unitOfWork.Cattle.Add(cow);
             _unitOfWork.Complete();
 
-            return RedirectToAction("Create");
+            return RedirectToAction("Details", new { id = cow.Id });
         }
 
         public ActionResult Details(int id)
