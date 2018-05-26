@@ -6,13 +6,12 @@ using System.Data.Entity;
 
 namespace CattleCompanion.Persistence
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Farm> Farms { get; set; }
         public DbSet<UserFarm> UserFarms { get; set; }
         public DbSet<Cow> Cattle { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -29,6 +28,8 @@ namespace CattleCompanion.Persistence
             modelBuilder.Configurations.Add(new FarmConfiguration());
             modelBuilder.Configurations.Add(new UserFarmConfiguration());
             modelBuilder.Configurations.Add(new CowConfiguration());
+            modelBuilder.Configurations.Add(new EventConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }

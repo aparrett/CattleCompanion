@@ -238,6 +238,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\Cow.cs" />
+    <Compile Include="Core\Models\Event.cs" />
     <Compile Include="Core\Models\Farm.cs" />
     <Compile Include="Core\Models\UniqueFarmColumn.cs" />
     <Compile Include="Core\Models\UserFarm.cs" />
@@ -249,6 +250,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Persistence\EntityConfigurations\CowConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\EventConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\FarmConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserFarmConfiguration.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
@@ -283,6 +285,10 @@
     <Compile Include="Persistence\Migrations\201805240413427_AddCattle.cs" />
     <Compile Include="Persistence\Migrations\201805240413427_AddCattle.Designer.cs">
       <DependentUpon>201805240413427_AddCattle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805261627490_AddEvents.cs" />
+    <Compile Include="Persistence\Migrations\201805261627490_AddEvents.Designer.cs">
+      <DependentUpon>201805261627490_AddEvents.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
@@ -411,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805240413427_AddCattle.resx">
       <DependentUpon>201805240413427_AddCattle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805261627490_AddEvents.resx">
+      <DependentUpon>201805261627490_AddEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
