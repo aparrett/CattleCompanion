@@ -1,5 +1,6 @@
 ﻿using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
+using System.Linq;
 
 namespace CattleCompanion.Persistence.Repositories
 {
@@ -15,6 +16,11 @@ namespace CattleCompanion.Persistence.Repositories
         public void Add(Cow cow)
         {
             _context.Cattle.Add(cow);
+        }
+
+        public Cow GetCow(int id)
+        {
+            return _context.Cattle.SingleOrDefault(c => c.Id == id);
         }
     }
 }

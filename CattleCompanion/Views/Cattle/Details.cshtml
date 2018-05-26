@@ -1,0 +1,13 @@
+﻿@model CattleCompanion.Core.Models.Cow
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.GivenId (@Model.Gender)</h2>
+<h3>@Model.Farm.Name</h3>
+<h3>@Model.Birthday.ToString("d")</h3>
+
+
+

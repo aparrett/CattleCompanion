@@ -52,5 +52,15 @@ namespace CattleCompanion.Controllers
 
             return RedirectToAction("Create");
         }
+
+        public ActionResult Details(int id)
+        {
+            var farm = _unitOfWork.Cattle.GetCow(id);
+
+            if (farm == null)
+                return HttpNotFound();
+
+            return View(farm);
+        }
     }
 }

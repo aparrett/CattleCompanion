@@ -367,6 +367,7 @@
     <Content Include="Views\Farms\Create.cshtml" />
     <Content Include="Views\Farms\Details.cshtml" />
     <Content Include="Views\Cattle\Create.cshtml" />
+    <Content Include="Views\Cattle\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
