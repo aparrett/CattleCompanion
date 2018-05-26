@@ -18,7 +18,7 @@
         @foreach (Cow cow in Model.Cattle)
         {
             <tr>
-                <td>@cow.GivenId</td>
+                <td>@Html.ActionLink(cow.GivenId, "Details", "Cattle", new { id = @cow.Id }, null)</td>
                 <td>@cow.Gender</td>
                 <td>@cow.Birthday.ToString("d")</td>
             </tr>
@@ -26,5 +26,4 @@
     </tbody>
 </table>
     
-<a href="/Cattle/Create?farmId=@Model.Id" class="btn btn-primary btn-sm">Add a Cow</a>
-
+@Html.ActionLink("Add a Cow", "Create", "Cattle", new { farmId = Model.Id }, new { @class = "btn btn-primary btn-sm" })
