@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CattleCompanion.Core.Models
 {
@@ -13,5 +14,6 @@ namespace CattleCompanion.Core.Models
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
+        public virtual ICollection<CowEvent> CowEvents { get; set; }
     }
 }

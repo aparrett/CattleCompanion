@@ -12,6 +12,7 @@ namespace CattleCompanion.Persistence
         public DbSet<UserFarm> UserFarms { get; set; }
         public DbSet<Cow> Cattle { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<CowEvent> CowEvents { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -29,7 +30,7 @@ namespace CattleCompanion.Persistence
             modelBuilder.Configurations.Add(new UserFarmConfiguration());
             modelBuilder.Configurations.Add(new CowConfiguration());
             modelBuilder.Configurations.Add(new EventConfiguration());
-
+            modelBuilder.Configurations.Add(new CowEventConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
