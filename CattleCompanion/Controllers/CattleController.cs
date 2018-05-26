@@ -55,12 +55,20 @@ namespace CattleCompanion.Controllers
 
         public ActionResult Details(int id)
         {
-            var farm = _unitOfWork.Cattle.GetCow(id);
+            var cow = _unitOfWork.Cattle.GetCow(id);
 
-            if (farm == null)
+            if (cow == null)
                 return HttpNotFound();
 
-            return View(farm);
+            var events = _unitOfWork.Events.GetAll();
+
+            var viewModel = new CowDetailsViewModel
+            {
+                Cow = cow,
+                Events = events
+            };
+
+            return View(viewModel);
         }
     }
 }

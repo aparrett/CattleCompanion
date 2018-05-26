@@ -237,6 +237,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
+    <Compile Include="Core\Models\CowDetailsViewModel.cs" />
     <Compile Include="Core\Models\CowEvent.cs" />
     <Compile Include="Core\Models\Cow.cs" />
     <Compile Include="Core\Models\Event.cs" />
@@ -310,9 +311,11 @@
     <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Persistence\Repositories\CowRepository.cs" />
+    <Compile Include="Persistence\Repositories\EventRepository.cs" />
     <Compile Include="Persistence\Repositories\FarmRepository.cs" />
     <Compile Include="Core\Repositories\IFarmRepository.cs" />
     <Compile Include="Core\Repositories\ICowRepository.cs" />
+    <Compile Include="Core\Repositories\IEventRepository.cs" />
     <Compile Include="Persistence\Repositories\UserFarmRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

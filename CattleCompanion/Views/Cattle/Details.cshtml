@@ -1,10 +1,54 @@
-﻿@model CattleCompanion.Core.Models.Cow
+﻿@model CattleCompanion.Core.Models.CowDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.GivenId (@Model.Gender)</h2>
-<h3>@Model.Farm.Name</h3>
-<h3>@Model.Birthday.ToString("d")</h3>
+<h2>@Model.Cow.GivenId (@Model.Cow.Gender)</h2>
+<h3>@Model.Cow.Farm.Name</h3>
+<h4>@Model.Cow.Birthday.ToString("d")</h4>
+
+<h2 class="mt-5">Events</h2>
+<p>There are no events to display.</p>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEvent">
+    Add Event
+</button>
+
+<div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEventLabel">Add Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Events)
+                    @Html.DropDownListFor(m => m.Events, new SelectList(Model.Events, "Id", "Name"), "", new {@class = "form-control"})
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary add-event">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).on('ready', function () {
+            var addEvent = function () {
+                console.log('test')
+            }
+
+            $('#addEvent').on('click', '.add-event', addEvent);
+
+            
+        });
+    </script>
+}

@@ -10,6 +10,7 @@ namespace CattleCompanion.Persistence
         public IFarmRepository Farms { get; private set; }
         public IUserFarmRepository UserFarms { get; private set; }
         public ICowRepository Cattle { get; private set; }
+        public IEventRepository Events { get; set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -17,6 +18,7 @@ namespace CattleCompanion.Persistence
             Farms = new FarmRepository(context);
             UserFarms = new UserFarmRepository(context);
             Cattle = new CowRepository(context);
+            Events = new EventRepository(context);
         }
 
         public void Complete()
