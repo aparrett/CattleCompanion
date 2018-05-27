@@ -1,4 +1,5 @@
-﻿using CattleCompanion.Core.Models;
+﻿using CattleCompanion.Core;
+using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace CattleCompanion.Persistence.Repositories
 {
     public class CowRepository : ICowRepository
     {
-        private ApplicationDbContext _context;
+        private IApplicationDbContext _context;
 
         public CowRepository(ApplicationDbContext context)
         {

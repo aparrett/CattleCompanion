@@ -7,8 +7,6 @@ namespace CattleCompanion.Persistence.EntityConfigurations
     {
         public CowEventConfiguration()
         {
-            HasKey(ce => new { ce.CowId, ce.EventId });
-
             HasRequired(ce => ce.Cow)
                 .WithMany(c => c.CowEvents)
                 .WillCascadeOnDelete(false);

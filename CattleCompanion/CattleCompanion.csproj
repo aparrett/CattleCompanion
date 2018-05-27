@@ -77,6 +77,9 @@
     <Reference Include="Ninject.Web.WebApi, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Web.WebApi.3.3.0\lib\net45\Ninject.Web.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Web.WebApi.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.3.0\lib\net45\Ninject.Web.WebApi.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -232,10 +235,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CowEventsController.cs" />
     <Compile Include="Controllers\CattleController.cs" />
     <Compile Include="Controllers\FarmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Core\Dtos\CowEventDto.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\CowDetailsViewModel.cs" />
     <Compile Include="Core\Models\CowEvent.cs" />
@@ -297,6 +302,14 @@
     <Compile Include="Persistence\Migrations\201805261641488_AddCowEvents.Designer.cs">
       <DependentUpon>201805261641488_AddCowEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201805271924336_AddIdAndDateToCowEvents.cs" />
+    <Compile Include="Persistence\Migrations\201805271924336_AddIdAndDateToCowEvents.Designer.cs">
+      <DependentUpon>201805271924336_AddIdAndDateToCowEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201805271942001_SeedEvents.cs" />
+    <Compile Include="Persistence\Migrations\201805271942001_SeedEvents.Designer.cs">
+      <DependentUpon>201805271942001_SeedEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -310,12 +323,14 @@
     <Compile Include="Core\ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Core\ViewModels\SendCodeViewModel.cs" />
     <Compile Include="Core\ViewModels\VerifyCodeViewModel.cs" />
+    <Compile Include="Persistence\Repositories\CowEventRepository.cs" />
     <Compile Include="Persistence\Repositories\CowRepository.cs" />
     <Compile Include="Persistence\Repositories\EventRepository.cs" />
     <Compile Include="Persistence\Repositories\FarmRepository.cs" />
     <Compile Include="Core\Repositories\IFarmRepository.cs" />
     <Compile Include="Core\Repositories\ICowRepository.cs" />
     <Compile Include="Core\Repositories\IEventRepository.cs" />
+    <Compile Include="Core\Repositories\ICowEventRepository.cs" />
     <Compile Include="Persistence\Repositories\UserFarmRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -328,6 +343,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app\cowDetails.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -386,8 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Api\" />
-    <Folder Include="Core\Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -432,6 +446,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805261641488_AddCowEvents.resx">
       <DependentUpon>201805261641488_AddCowEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805271924336_AddIdAndDateToCowEvents.resx">
+      <DependentUpon>201805271924336_AddIdAndDateToCowEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201805271942001_SeedEvents.resx">
+      <DependentUpon>201805271942001_SeedEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Cow.GivenId (@Model.Cow.Gender)</h2>
+<h2 id="given-id" data-id="@Model.Cow.Id">@Model.Cow.GivenId (@Model.Cow.Gender)</h2>
 <h3>@Model.Cow.Farm.Name</h3>
 <h4>@Model.Cow.Birthday.ToString("d")</h4>
 
@@ -30,6 +30,10 @@
                     @Html.LabelFor(m => m.Events)
                     @Html.DropDownListFor(m => m.Events, new SelectList(Model.Events, "Id", "Name"), "", new {@class = "form-control"})
                 </div>
+                <div class="form-group">
+                    <label for="Date">Date</label>
+                    <input id="Date" type="date" class="form-control"/>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -38,17 +42,11 @@
         </div>
     </div>
 </div>
-
+<script src="~/Scripts/app/cowDetails.js"></script>
 @section scripts{
     <script>
         $(document).on('ready', function () {
-            var addEvent = function () {
-                console.log('test')
-            }
-
-            $('#addEvent').on('click', '.add-event', addEvent);
-
-            
+            CowDetails.init();
         });
     </script>
 }

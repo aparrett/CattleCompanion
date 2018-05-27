@@ -8,6 +8,7 @@ namespace CattleCompanion.Core
         IUserFarmRepository UserFarms { get; }
         ICowRepository Cattle { get; }
         IEventRepository Events { get; }
+        ICowEventRepository CowEvents { get; }
         void Complete();
     }
 }
