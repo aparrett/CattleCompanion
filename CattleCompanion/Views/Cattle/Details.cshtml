@@ -1,4 +1,6 @@
-﻿@model CattleCompanion.Core.Models.CowDetailsViewModel
+﻿@using System.Activities.Expressions
+@using CattleCompanion.Core.Models
+@model CattleCompanion.Core.Models.CowDetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -12,7 +14,19 @@
 
 <h2 class="mt-5">Events</h2>
 <div id="cow-events">
-    <p class="empty-events">There are no events to display.</p>
+    @if (Model.Cow.CowEvents.Count == 0)
+    {
+        <p class="empty-events">There are no events to display.</p>
+    }
+    else
+    {
+        foreach (CowEvent cowEvent in @Model.Cow.CowEvents)
+        {
+            <h4>@cowEvent.Event.Name (@cowEvent.Date.ToString("d"))</h4>
+            <p>@cowEvent.Description</p>
+        }
+    }
+
 </div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEvent">
     Add Event
