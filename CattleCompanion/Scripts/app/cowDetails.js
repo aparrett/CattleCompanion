@@ -9,10 +9,17 @@
     var createCowEvent = function (e) {
         var eventId = $('#Events').val();
         var date = $('#Date').val();
+        var event = $(`#Events option[value="${eventId}"]`).text();
 
         $.post("/api/cowEvents/", { cowId: cowId, eventId: eventId, date: date })
             .done(function () {
-                alert('The event was successfully added to the cow');
+                if ($('.empty-events').length)
+                    $('.empty-events').remove();
+
+                var html = `<h4>${event} - ${date}<h4>
+                            <p>This is a test description</p>`;
+
+                $('#cow-events').append(html);
             }).fail(function () {
                 alert("Sorry, the event could not be added at this time.");
             }).always(function () {
