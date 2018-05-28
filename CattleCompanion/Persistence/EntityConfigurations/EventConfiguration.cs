@@ -9,9 +9,6 @@ namespace CattleCompanion.Persistence.EntityConfigurations
         {
             Property(e => e.Name)
                 .IsRequired();
-
-            Property(e => e.Description)
-                .IsRequired();
         }
     }
 }

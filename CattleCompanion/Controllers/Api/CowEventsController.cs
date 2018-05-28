@@ -22,7 +22,8 @@ namespace CattleCompanion.Controllers.Api
             {
                 CowId = dto.CowId,
                 EventId = dto.EventId,
-                Date = dto.Date
+                Date = dto.Date,
+                Description = dto.Description
             };
 
             _unitOfWork.CowEvents.Add(cowEvent);

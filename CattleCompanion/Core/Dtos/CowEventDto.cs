@@ -7,5 +7,6 @@ namespace CattleCompanion.Core.Dtos
         public int CowId { get; set; }
         public int EventId { get; set; }
         public DateTime Date { get; set; }
+        public string Description { get; set; }
     }
 }
