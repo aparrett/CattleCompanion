@@ -18,13 +18,21 @@ namespace CattleCompanion.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateCowEvent(CowEventDto dto)
         {
+            if (dto.Date.Year < 1900)
+                return BadRequest("Please enter a valid date.");
+
+            if (dto.EventId == 0)
+                return BadRequest("Please select an event.");
+
             var cowEvent = new CowEvent
             {
                 CowId = dto.CowId,
                 EventId = dto.EventId,
-                Date = dto.Date,
-                Description = dto.Description
+                Date = dto.Date
             };
+
+            if (dto.Description != null)
+                cowEvent.Description = dto.Description;
 
             _unitOfWork.CowEvents.Add(cowEvent);
             _unitOfWork.Complete();
