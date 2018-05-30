@@ -59,6 +59,16 @@ a:hover {
     font-size: 1.2rem;
 }
 
+nav .dropdown {
+    display: inline;
+    cursor: pointer;
+}
+
+.body-content {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
 
 /* Login Page */
 

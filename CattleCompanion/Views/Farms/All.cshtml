@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CattleCompanion.Core.Models.Farm>
+@{
+    ViewBag.Title = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Farms</h2>
+@if (!Model.Any())
+{
+    <p>You do not have any farms. Click below to create a farm.</p>
+}
+else
+{
+    <ul class="list-group my-4">
+        @foreach (var farm in Model)
+        {
+            <li class="list-group-item">@Html.ActionLink(farm.Name, "Details", new { farm.Url })</li>
+        }
+    </ul>
+}
+
+@Html.ActionLink("Add a Farm", "Create", "Farms", null, new { @class = "btn btn-primary btn-sm" })

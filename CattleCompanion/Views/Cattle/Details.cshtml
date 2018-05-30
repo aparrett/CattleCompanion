@@ -11,7 +11,7 @@
     @Model.Cow.GivenId (@Model.Cow.Gender) @Html.ActionLink("Delete", "Delete", new { id = Model.Cow.Id }, 
                                                new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation"})
 </h2>
-<h3>@Model.Cow.Farm.Name</h3>
+<h3>@Html.ActionLink(Model.Cow.Farm.Name, "Details", "Farms", new { url = Model.Cow.Farm.Url }, null)</h3>
 <h4>@Model.Cow.Birthday.ToString("d")</h4>
 
 <h2 class="mt-5">Events</h2>

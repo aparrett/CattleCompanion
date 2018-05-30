@@ -15,8 +15,8 @@
         @Html.ActionLink("Cattle Companion", "Index", "Home", new {area = ""}, new {@class = "navbar-brand my-0 mr-md-auto font-weight-normal" })
         <nav>
             @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "p-2 text-dark" })
-            @Html.ActionLink("Add a Farm", "Create", "Farms", new { area = "" }, new { @class = "p-2 text-dark" })
-            @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Account", @class = "p-2 text-dark"})
+            @Html.ActionLink("Farms", "All", "Farms", new { area = "" }, new { @class = "p-2 text-dark" })
+            @Html.ActionLink("Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Account", @class = "p-2 text-dark" })
         </nav>
         @Html.Partial("_LoginPartial")
     </div>

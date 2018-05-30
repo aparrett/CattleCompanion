@@ -348,6 +348,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app\cowDetails.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -403,6 +404,7 @@
     <Content Include="Views\Farms\Details.cshtml" />
     <Content Include="Views\Cattle\Create.cshtml" />
     <Content Include="Views\Cattle\Details.cshtml" />
+    <Content Include="Views\Farms\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

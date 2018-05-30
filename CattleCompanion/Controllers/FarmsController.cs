@@ -75,5 +75,11 @@ namespace CattleCompanion.Controllers
 
             return View(farm);
         }
+
+        [Route("farms/")]
+        public ActionResult All()
+        {
+            return View(_unitOfWork.UserFarms.GetFarms(User.Identity.GetUserId()));
+        }
     }
 }
