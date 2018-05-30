@@ -54,6 +54,12 @@ a:hover {
     border-color: #a0410c;
 }
 
+/* Global */
+.text-small {
+    font-size: 1.2rem;
+}
+
+
 /* Login Page */
 
 .form-signin {
@@ -97,3 +103,4 @@ a:hover {
     padding-bottom: 40px;
     background-color: #f5f5f5;
 }
+

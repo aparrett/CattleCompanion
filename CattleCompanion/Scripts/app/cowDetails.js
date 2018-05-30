@@ -4,6 +4,7 @@
     var init = function () {
         cowId = $('#cow-id').attr('data-id');
         $('#addEvent').on('click', '.add-event', createCowEvent);
+        $(document).on('click', '.delete-cow', showDeleteConfirmation);
     };
 
     var createCowEvent = function () {
@@ -26,6 +27,11 @@
                 alert(response.responseJSON.message);
             });
     }
+
+    var showDeleteConfirmation = function(e) {
+        e.preventDefault();
+        $('#deleteConfirmation').modal('show');
+    };
 
     return {
         init: init

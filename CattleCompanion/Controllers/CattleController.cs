@@ -70,5 +70,23 @@ namespace CattleCompanion.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult Delete(int id)
+        {
+            var cow = _unitOfWork.Cattle.GetCow(id);
+            var url = cow.Farm.Url;
+
+            if (cow == null)
+                return HttpNotFound();
+
+            var userFarm = _unitOfWork.UserFarms.GetUserFarm(cow.FarmId, User.Identity.GetUserId());
+            if (userFarm == null)
+                return new HttpUnauthorizedResult();
+
+            _unitOfWork.Cattle.Remove(cow);
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Details", "Farms", new { url });
+        }
     }
 }

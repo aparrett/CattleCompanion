@@ -23,5 +23,10 @@ namespace CattleCompanion.Persistence.Repositories
         {
             return _context.Cattle.SingleOrDefault(c => c.Id == id);
         }
+
+        public void Remove(Cow cow)
+        {
+            _context.Cattle.Remove(cow);
+        }
     }
 }
