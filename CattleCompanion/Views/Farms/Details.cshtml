@@ -6,24 +6,31 @@
 }
 
 <h2 class="mt-5">@Model.Name</h2>
-<table class="table mt-4">
-    <thead>
+@if (Model.Cattle.Count > 0)
+{
+    <table class="table mt-4">
+        <thead>
         <tr>
             <th scope="col">Name or Id</th>
             <th scope="col">Gender</th>
             <th scope="col">Birthday</th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (Cow cow in Model.Cattle)
-        {
+        </thead>
+        <tbody>
+            @foreach (Cow cow in Model.Cattle)
+            {
             <tr>
                 <td>@Html.ActionLink(cow.GivenId, "Details", "Cattle", new { id = @cow.Id }, null)</td>
                 <td>@cow.Gender</td>
                 <td>@cow.Birthday.ToString("d")</td>
             </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This farm doesn't have any cattle. Click below to add a cow to your farm!</p>
+}
     
 @Html.ActionLink("Add a Cow", "Create", "Cattle", new { farmId = Model.Id }, new { @class = "btn btn-primary btn-sm" })
