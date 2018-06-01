@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace CattleCompanion.Controllers
 {
     [Authorize]
+    [RoutePrefix("cattle")]
     public class CattleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,7 +17,7 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Route("cattle/create")]
+        [Route("create")]
         public ViewResult Create(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -31,7 +32,7 @@ namespace CattleCompanion.Controllers
         }
 
         [HttpPost]
-        [Route("cattle/create")]
+        [Route("create")]
         public ActionResult Create(CowFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -53,7 +54,7 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { id = cow.Id });
         }
 
-        [Route("cattle/details/{id}")]
+        [Route("details/{id}")]
         public ActionResult Details(int id)
         {
             var cow = _unitOfWork.Cattle.GetCow(id);
