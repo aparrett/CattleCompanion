@@ -27,6 +27,7 @@ namespace CattleCompanion.Controllers
                 : RedirectToAction("Create", "Farms");
         }
 
+        [Route("about")]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -34,6 +35,7 @@ namespace CattleCompanion.Controllers
             return View();
         }
 
+        [Route("contact")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

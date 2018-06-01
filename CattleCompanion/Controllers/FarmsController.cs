@@ -18,6 +18,7 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Route("farms/create")]
         public ActionResult Create()
         {
             return View(new FarmFormViewModel());

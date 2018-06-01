@@ -16,22 +16,22 @@ namespace CattleCompanion.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public ViewResult Create(int? farmId = null)
+        [Route("cattle/create")]
+        public ViewResult Create(int id)
         {
             var userId = User.Identity.GetUserId();
             var farms = _unitOfWork.UserFarms.GetFarms(userId);
             var viewModel = new CowFormViewModel()
             {
-                Farms = farms
+                Farms = farms,
+                FarmId = id
             };
-
-            if (farmId != null)
-                viewModel.FarmId = (int)farmId;
 
             return View(viewModel);
         }
 
         [HttpPost]
+        [Route("cattle/create")]
         public ActionResult Create(CowFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -53,6 +53,7 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { id = cow.Id });
         }
 
+        [Route("cattle/details/{id}")]
         public ActionResult Details(int id)
         {
             var cow = _unitOfWork.Cattle.GetCow(id);
