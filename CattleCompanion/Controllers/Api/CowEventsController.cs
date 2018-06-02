@@ -37,7 +37,7 @@ namespace CattleCompanion.Controllers.Api
             _unitOfWork.CowEvents.Add(cowEvent);
             _unitOfWork.Complete();
 
-            return Ok();
+            return Ok(cowEvent);
         }
     }
 }
