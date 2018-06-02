@@ -42,27 +42,52 @@ new { @class = "text-small text-muted delete-cow", @data_toggle = "modal", @data
 
 <h3 class="mt-5">Family</h3>
 
-<h5>Parents</h5>
-@if (Model.Cow.MotherId == null && Model.Cow.FatherId == null)
-{
-    <p>Empty.</p>
-}
+<h5 class="my-3">Parents</h5>
 @if (Model.Cow.MotherId != null)
 {
-    <p><strong>Mother:</strong> @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId })</p>
+    <p class="list-group-item">@Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId }) - Mother</p>
+}
+else
+{
+    <button type="button" class="btn btn-primary btn-sm add-mother">Add Mother</button>
+    <div class="form-group add-mother-menu d-none my-2">
+        <select id="mothers" class="form-control mb-3">
+            @foreach (Cow cow in Model.MotherOptions)
+            {
+                <option value="@cow.Id">@cow.GivenId</option>
+            }
+        </select>
+        <button type="button" class="btn btn-primary btn-sm cancel-add-mother">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm save-mother">Save Mother</button>
+    </div>
 }
 @if (Model.Cow.FatherId != null)
 {
-    <p><strong>Father:</strong> @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })</p>
+    <p class="list-group-item">@Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId }) - Father</p>
 }
-<h5>Children</h5>
+else
+{
+    <button type="button" class="btn btn-primary btn-sm add-father">Add Father</button>
+    <div class="form-group add-father-menu d-none my-2">
+        <select id="fathers" class="form-control mb-3">
+            @foreach (Cow cow in Model.FatherOptions)
+            {
+                <option value="@cow.Id">@cow.GivenId</option>
+            }
+        </select>
+        <button type="button" class="btn btn-primary btn-sm cancel-add-father">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm save-father">Save Father</button>
+    </div>
+}
+
+<h5 class="my-3">Children</h5>
 @if (!Model.Children.Any())
 {
     <p>Empty.</p>
 }
 else
 {
-    <ul class="list-group my-3">
+    <ul class="list-group">
         @foreach (var cow in Model.Children)
         {
             <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
@@ -70,7 +95,7 @@ else
     </ul>
 }
 
-<h5>Siblings</h5>
+<h5 class="my-3">Siblings</h5>
 @if (!Model.Siblings.Any())
 {
     <p>Empty.</p>
@@ -133,6 +158,23 @@ else
         </div>
     </div>
 </div>
+<div class="modal fade" id="newCow" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                @Html.ActionLink("Yes", "Create", new { id = Model.Cow.FarmId }, new { @class = "btn btn-primary", @role = "button" })
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="~/Scripts/app/cowDetails.js"></script>
 

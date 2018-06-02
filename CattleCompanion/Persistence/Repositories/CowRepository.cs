@@ -38,6 +38,11 @@ namespace CattleCompanion.Persistence.Repositories
                 .ToList();
         }
 
+        public IEnumerable<Cow> GetAllByFarm(int id)
+        {
+            return _context.Cattle.Where(c => c.FarmId == id).ToList();
+        }
+
         public void Remove(Cow cow)
         {
             _context.Cattle.Remove(cow);

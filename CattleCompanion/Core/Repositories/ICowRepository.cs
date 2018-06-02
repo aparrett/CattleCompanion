@@ -10,5 +10,6 @@ namespace CattleCompanion.Core.Repositories
         Cow GetCow(int id);
         IEnumerable<Cow> GetChildren(Cow cow);
         IEnumerable<Cow> GetSiblings(Cow cow);
+        IEnumerable<Cow> GetAllByFarm(int id);
     }
 }

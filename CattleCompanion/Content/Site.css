@@ -114,3 +114,12 @@ nav .dropdown {
     background-color: #f5f5f5;
 }
 
+/* Cow Details */
+.add-mother-menu + .list-group-item,
+.add-father-menu + .list-group-item {
+    margin-top: 1rem;
+}
+
+.list-group-item + .add-father {
+    margin-top: 1rem;
+}

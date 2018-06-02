@@ -17,5 +17,15 @@ namespace CattleCompanion.Core.Models
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
         public virtual ICollection<CowEvent> CowEvents { get; set; }
+
+        public void DeleteMother()
+        {
+            MotherId = null;
+        }
+
+        public void DeleteFather()
+        {
+            FatherId = null;
+        }
     }
 }

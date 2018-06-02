@@ -235,11 +235,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\CattleController.cs" />
     <Compile Include="Controllers\Api\CowEventsController.cs" />
     <Compile Include="Controllers\CattleController.cs" />
     <Compile Include="Controllers\FarmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Core\Dtos\CowDto.cs" />
     <Compile Include="Core\Dtos\CowEventDto.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\CowDetailsViewModel.cs" />
