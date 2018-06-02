@@ -106,10 +106,13 @@ new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "
 }
 else
 {
-    foreach (var cow in Model.Children)
-    {
-        <p>@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</p>
-    }
+    <ul class="list-group my-3">
+        @foreach (var cow in Model.Children)
+        {
+            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
+        }
+    </ul>
+
 }
 <h4>Siblings</h4>
 @if (!Model.Siblings.Any())
@@ -118,10 +121,12 @@ else
 }
 else
 {
-    foreach (var cow in Model.Siblings)
-    {
-        <p>@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</p>
-    }
+    <ul class="list-group my-3">
+        @foreach (var cow in Model.Siblings)
+        {
+            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})</li>
+        }
+    </ul>
 }
 
 <script src="~/Scripts/app/cowDetails.js"></script>
