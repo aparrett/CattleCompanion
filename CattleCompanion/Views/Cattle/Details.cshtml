@@ -9,32 +9,81 @@
 
 <h2 id="cow-id" class="mt-5" data-id="@Model.Cow.Id">
     @Model.Cow.GivenId (@Model.Cow.Gender) @Html.ActionLink("Delete", "Delete", new { id = Model.Cow.Id },
-new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation" })
+new { @class = "text-small text-muted delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation" })
 </h2>
 <h3>@Html.ActionLink(Model.Cow.Farm.Name, "Details", "Farms", new { url = Model.Cow.Farm.Url }, null)</h3>
 <h4>@Model.Cow.Birthday.ToString("d")</h4>
 
-<h2 class="mt-5">Events</h2>
-<div id="cow-events">
+<h3 class="mt-5 mb-0">Events</h3>
+<div id="cow-events" class="my-3">
     @if (!Model.Cow.CowEvents.Any())
     {
         <p class="empty-events">There are no events to display.</p>
     }
     else
     {
-        foreach (CowEvent cowEvent in @Model.Cow.CowEvents)
-        {
-            <h4>@cowEvent.Event.Name (@cowEvent.Date.ToString("d"))</h4>
-            <p>@cowEvent.Description</p>
-        }
+        <ul class="list-group">
+            @foreach (CowEvent cowEvent in @Model.Cow.CowEvents)
+            {
+                <li class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@cowEvent.Event.Name</h5>
+                        <small>@cowEvent.Date.ToString("d")</small>
+                    </div>
+                    <p class="mb-1">@cowEvent.Description</p>
+                </li>
+            }
+        </ul>
     }
-
 </div>
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addEvent">
     Add Event
 </button>
 
+<h3 class="mt-5">Family</h3>
 
+<h5>Parents</h5>
+@if (Model.Cow.MotherId == null && Model.Cow.FatherId == null)
+{
+    <p>Empty.</p>
+}
+@if (Model.Cow.MotherId != null)
+{
+    <p><strong>Mother:</strong> @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId })</p>
+}
+@if (Model.Cow.FatherId != null)
+{
+    <p><strong>Father:</strong> @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })</p>
+}
+<h5>Children</h5>
+@if (!Model.Children.Any())
+{
+    <p>Empty.</p>
+}
+else
+{
+    <ul class="list-group my-3">
+        @foreach (var cow in Model.Children)
+        {
+            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
+        }
+    </ul>
+}
+
+<h5>Siblings</h5>
+@if (!Model.Siblings.Any())
+{
+    <p>Empty.</p>
+}
+else
+{
+    <ul class="list-group my-3">
+        @foreach (var cow in Model.Siblings)
+        {
+            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
+        }
+    </ul>
+}
 
 <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -84,50 +133,6 @@ new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "
         </div>
     </div>
 </div>
-
-<h2 class="mt-5">Family</h2>
-<h4>Parents</h4>
-@if (Model.Cow.MotherId == null && Model.Cow.FatherId == null)
-{
-    <p>Empty.</p>
-}
-@if (Model.Cow.MotherId != null)
-{
-    <p><strong>Mother:</strong> @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId })</p>
-}
-@if (Model.Cow.FatherId != null)
-{
-    <p><strong>Father:</strong> @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })</p>
-}
-<h4>Children</h4>
-@if (!Model.Children.Any())
-{
-    <p>Empty.</p>
-}
-else
-{
-    <ul class="list-group my-3">
-        @foreach (var cow in Model.Children)
-        {
-            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
-        }
-    </ul>
-
-}
-<h4>Siblings</h4>
-@if (!Model.Siblings.Any())
-{
-    <p>Empty.</p>
-}
-else
-{
-    <ul class="list-group my-3">
-        @foreach (var cow in Model.Siblings)
-        {
-            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})</li>
-        }
-    </ul>
-}
 
 <script src="~/Scripts/app/cowDetails.js"></script>
 
