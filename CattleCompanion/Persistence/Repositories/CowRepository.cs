@@ -1,6 +1,7 @@
 ﻿using CattleCompanion.Core;
 using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CattleCompanion.Persistence.Repositories
@@ -22,6 +23,19 @@ namespace CattleCompanion.Persistence.Repositories
         public Cow GetCow(int id)
         {
             return _context.Cattle.SingleOrDefault(c => c.Id == id);
+        }
+
+        public IEnumerable<Cow> GetChildren(Cow cow)
+        {
+            return _context.Cattle.Where(c => c.FatherId == cow.Id || c.MotherId == cow.Id).ToList();
+        }
+
+        public IEnumerable<Cow> GetSiblings(Cow cow)
+        {
+            return _context.Cattle
+                .Where(c => (c.FatherId == cow.FatherId && c.Id != cow.Id && c.FatherId != null)
+                            || (c.MotherId == cow.MotherId && c.Id != cow.Id && c.MotherId != null))
+                .ToList();
         }
 
         public void Remove(Cow cow)

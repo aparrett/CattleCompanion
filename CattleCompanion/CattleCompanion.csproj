@@ -318,6 +318,10 @@
     <Compile Include="Persistence\Migrations\201806020101297_CascadeDeleteCowEvents.Designer.cs">
       <DependentUpon>201806020101297_CascadeDeleteCowEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201806020320456_AddMotherFatherFKs.cs" />
+    <Compile Include="Persistence\Migrations\201806020320456_AddMotherFatherFKs.Designer.cs">
+      <DependentUpon>201806020320456_AddMotherFatherFKs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -468,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201806020101297_CascadeDeleteCowEvents.resx">
       <DependentUpon>201806020101297_CascadeDeleteCowEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201806020320456_AddMotherFatherFKs.resx">
+      <DependentUpon>201806020320456_AddMotherFatherFKs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

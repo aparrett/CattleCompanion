@@ -6,5 +6,7 @@ namespace CattleCompanion.Core.Models
     {
         public Cow Cow { get; set; }
         public IEnumerable<Event> Events { get; set; }
+        public IEnumerable<Cow> Children { get; set; }
+        public IEnumerable<Cow> Siblings { get; set; }
     }
 }

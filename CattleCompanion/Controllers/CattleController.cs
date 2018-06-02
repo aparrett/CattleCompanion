@@ -67,7 +67,9 @@ namespace CattleCompanion.Controllers
             var viewModel = new CowDetailsViewModel
             {
                 Cow = cow,
-                Events = events
+                Events = events,
+                Children = _unitOfWork.Cattle.GetChildren(cow),
+                Siblings = _unitOfWork.Cattle.GetSiblings(cow)
             };
 
             return View(viewModel);

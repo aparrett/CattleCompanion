@@ -8,15 +8,15 @@
 }
 
 <h2 id="cow-id" class="mt-5" data-id="@Model.Cow.Id">
-    @Model.Cow.GivenId (@Model.Cow.Gender) @Html.ActionLink("Delete", "Delete", new { id = Model.Cow.Id }, 
-                                               new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation"})
+    @Model.Cow.GivenId (@Model.Cow.Gender) @Html.ActionLink("Delete", "Delete", new { id = Model.Cow.Id },
+new { @class = "text-small delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation" })
 </h2>
 <h3>@Html.ActionLink(Model.Cow.Farm.Name, "Details", "Farms", new { url = Model.Cow.Farm.Url }, null)</h3>
 <h4>@Model.Cow.Birthday.ToString("d")</h4>
 
 <h2 class="mt-5">Events</h2>
 <div id="cow-events">
-    @if (Model.Cow.CowEvents.Count == 0)
+    @if (!Model.Cow.CowEvents.Any())
     {
         <p class="empty-events">There are no events to display.</p>
     }
@@ -30,9 +30,11 @@
     }
 
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEvent">
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addEvent">
     Add Event
 </button>
+
+
 
 <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -47,15 +49,15 @@
                 <form id="event-form">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Events)
-                        @Html.DropDownListFor(m => m.Events, new SelectList(Model.Events, "Id", "Name"), "", new {@class = "form-control"})
+                        @Html.DropDownListFor(m => m.Events, new SelectList(Model.Events, "Id", "Name"), "", new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label for="Date">Date</label>
-                        <input id="Date" type="date" class="form-control"/>
+                        <input id="Date" type="date" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="Description">Description</label>
-                        <input id="Description" type="text" class="form-control"/>
+                        <input id="Description" type="text" class="form-control" />
                     </div>
                 </form>
             </div>
@@ -82,6 +84,46 @@
         </div>
     </div>
 </div>
+
+<h2 class="mt-5">Family</h2>
+<h4>Parents</h4>
+@if (Model.Cow.MotherId == null && Model.Cow.FatherId == null)
+{
+    <p>Empty.</p>
+}
+@if (Model.Cow.MotherId != null)
+{
+    <p><strong>Mother:</strong> @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId })</p>
+}
+@if (Model.Cow.FatherId != null)
+{
+    <p><strong>Father:</strong> @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })</p>
+}
+<h4>Children</h4>
+@if (!Model.Children.Any())
+{
+    <p>Empty.</p>
+}
+else
+{
+    foreach (var cow in Model.Children)
+    {
+        <p>@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</p>
+    }
+}
+<h4>Siblings</h4>
+@if (!Model.Siblings.Any())
+{
+    <p>Empty.</p>
+}
+else
+{
+    foreach (var cow in Model.Siblings)
+    {
+        <p>@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</p>
+    }
+}
+
 <script src="~/Scripts/app/cowDetails.js"></script>
 
 @section scripts{

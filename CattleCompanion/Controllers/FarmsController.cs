@@ -25,6 +25,7 @@ namespace CattleCompanion.Controllers
         }
 
         [HttpPost]
+        [Route("farms/create")]
         public ActionResult Create(FarmFormViewModel viewModel)
         {
             if (!ModelState.IsValid)

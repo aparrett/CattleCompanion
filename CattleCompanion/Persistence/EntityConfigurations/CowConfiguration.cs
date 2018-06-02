@@ -16,6 +16,14 @@ namespace CattleCompanion.Persistence.EntityConfigurations
             Property(c => c.Gender)
                 .IsRequired()
                 .HasMaxLength(1);
+
+            HasOptional(c => c.Father)
+                .WithMany()
+                .HasForeignKey(c => c.FatherId);
+
+            HasOptional(c => c.Mother)
+                .WithMany()
+                .HasForeignKey(c => c.MotherId);
         }
     }
 }
