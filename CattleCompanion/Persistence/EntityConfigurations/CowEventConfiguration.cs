@@ -9,7 +9,7 @@ namespace CattleCompanion.Persistence.EntityConfigurations
         {
             HasRequired(ce => ce.Cow)
                 .WithMany(c => c.CowEvents)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
         }
     }
 }

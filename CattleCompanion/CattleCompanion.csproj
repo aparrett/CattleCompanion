@@ -314,6 +314,10 @@
     <Compile Include="Persistence\Migrations\201805280217134_MoveDescriptionToCowEvent.Designer.cs">
       <DependentUpon>201805280217134_MoveDescriptionToCowEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201806020101297_CascadeDeleteCowEvents.cs" />
+    <Compile Include="Persistence\Migrations\201806020101297_CascadeDeleteCowEvents.Designer.cs">
+      <DependentUpon>201806020101297_CascadeDeleteCowEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -461,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201805280217134_MoveDescriptionToCowEvent.resx">
       <DependentUpon>201805280217134_MoveDescriptionToCowEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201806020101297_CascadeDeleteCowEvents.resx">
+      <DependentUpon>201806020101297_CascadeDeleteCowEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
