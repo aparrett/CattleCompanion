@@ -72,25 +72,27 @@ else
 @if (Model.Cow.FatherId != null)
 {
     <p id="father" class="list-group-item d-flex" data-id="@Model.Cow.FatherId">
-        @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })
+        @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId }, new { @class = "given-id"})
         <span>&nbsp;- Father</span>
-        <small class="remove-item remove-father">Remove</small>
+        <small class="remove-item remove-father-confirm">Remove</small>
     </p>
+    <button type="button" class="btn btn-primary btn-sm add-father d-none">Add Father</button>
 }
 else
 {
     <button type="button" class="btn btn-primary btn-sm add-father">Add Father</button>
-    <div class="form-group add-father-menu d-none my-2">
-        <select id="fathers" class="form-control mb-3">
-            @foreach (Cow cow in Model.PossibleFathers)
-            {
-                <option value="@cow.Id">@cow.GivenId</option>
-            }
-        </select>
-        <button type="button" class="btn btn-primary btn-sm cancel-add-father">Cancel</button>
-        <button type="button" class="btn btn-primary btn-sm save-father">Save Father</button>
-    </div>
 }
+
+<div class="form-group add-father-menu d-none my-2">
+    <select id="fathers" class="form-control mb-3">
+        @foreach (Cow cow in Model.PossibleFathers)
+        {
+            <option value="@cow.Id">@cow.GivenId</option>
+        }
+    </select>
+    <button type="button" class="btn btn-primary btn-sm cancel-add-father">Cancel</button>
+    <button type="button" class="btn btn-primary btn-sm save-father">Save Father</button>
+</div>
 
 <div id="children-container">
     <h5 class="my-3">Children</h5>

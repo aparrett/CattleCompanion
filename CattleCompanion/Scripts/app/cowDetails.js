@@ -20,6 +20,8 @@
         $(document).on('click', '.add-father', showAddFather);
         $(document).on('click', '.cancel-add-father', cancelAddFather);
         $(document).on('click', '.save-father', saveFather);
+        $(document).on('click', '.remove-father-confirm', showRemoveFatherConfirmation);
+        $(document).on('click', '.remove-father', removeFather);
 
         $(document).on('click', '.add-child', showAddChild);
         $(document).on('click', '.cancel-add-child', cancelAddChild);
@@ -166,17 +168,41 @@
 
     var displayFather = function(cow) {
         var element = `<p id="father" class="list-group-item d-flex" data-id="${cow.fatherId}">
-                            <a href="/cattle/details/${cow.fatherId}">
+                            <a class="given-id" href="/cattle/details/${cow.fatherId}">
                                 ${cow.father.givenId}
                             </a>
                             <span>&nbsp;- Father</span>
-                            <small class="remove-item">Remove</small>
+                            <small class="remove-item remove-father-confirm">Remove</small>
                         </p>`;
         $('.add-father').before(element);
-        $('.add-father, .add-father-menu').remove();
+        $('.add-father, .add-father-menu').addClass('d-none');
         getSiblings();
     };
 
+    var showRemoveFatherConfirmation = function () {
+        var givenId = $('#father .given-id').text();
+        var label = `Are you sure you want to remove ${givenId} as the father?`;
+        $('#removeConfirmationLabel').text(label);
+        $('#removeConfirmation .remove-yes').addClass('remove-father');
+        $('#removeConfirmation').modal('show');
+    };
+
+    var removeFather = function () {
+        $.ajax({
+                type: "PUT",
+                url: '/api/cattle/' + cowId,
+                data: { fatherId: 0 }
+            })
+            .done(function () {
+                $('#father').remove();
+                $('.add-father').removeClass('d-none');
+                $('#removeConfirmation').modal('hide');
+            })
+            .fail(function () {
+                var message = $('#father a').text() + " could not be removed. Please try again later";
+                showAlert(message);
+            });
+    };
 
     var showAddChild = function () {
         if ($('#children option').length > 0) {

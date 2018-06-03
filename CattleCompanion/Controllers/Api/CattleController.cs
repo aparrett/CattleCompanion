@@ -70,12 +70,19 @@ namespace CattleCompanion.Controllers.Api
 
             if (dto.FatherId != null)
             {
-                var father = _unitOfWork.Cattle.GetCow((int)dto.FatherId);
-                if (father == null)
-                    return NotFound();
+                if (dto.FatherId == 0)
+                {
+                    cow.FatherId = null;
+                }
+                else
+                {
+                    var father = _unitOfWork.Cattle.GetCow((int)dto.FatherId);
+                    if (father == null)
+                        return NotFound();
 
-                if (cow.Id != dto.FatherId && cow.Birthday > father.Birthday && father.Gender == "M")
-                    cow.FatherId = dto.FatherId;
+                    if (cow.Id != dto.FatherId && cow.Birthday > father.Birthday && father.Gender == "M")
+                        cow.FatherId = dto.FatherId;
+                }
             }
 
             if (dto.ChildId != null)

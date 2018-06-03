@@ -120,7 +120,7 @@ button:not(.d-none) + .add-mother-menu + .list-group-item,
     margin-top: 1rem;
 }
 
-.list-group-item + .add-father {
+.add-mother.d-none + .add-mother-menu + .add-father {
     margin-top: 1rem;
 }
 
