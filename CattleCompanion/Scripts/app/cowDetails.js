@@ -35,7 +35,7 @@
                 var date = new Date(cowEvent.date);
                 date = date.toLocaleDateString("en-US");
 
-                var html = `<li class="list-group-item list-group-item-action flex-column align-items-start">
+                var element = `<li class="list-group-item list-group-item-action flex-column align-items-start">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">${event}</h5>
                                     <small>${date}</small>
@@ -48,7 +48,7 @@
                     $('#cow-events').append("<ul class='list-group'></ul>");
                 }
                     
-                $('#cow-events .list-group').append(html);
+                $('#cow-events .list-group').append(element);
                 $('#addEvent').modal('hide');
 
                 resetCowEventModal();
@@ -91,12 +91,12 @@
     };
 
     var displayMother = function (cow) {
-        var html = `<p class="list-group-item">
+        var element = `<p class="list-group-item">
                         <a href="/cattle/details/${cow.motherId}">
                             ${cow.mother.givenId}
                         </a> - Mother
                     </p>`;
-        $('.add-mother').before(html);
+        $('.add-mother').before(element);
         $('.add-mother, .add-mother-menu').remove();
         getSiblings();
     };
@@ -126,14 +126,14 @@
     };
 
     var displayFather = function(cow) {
-        var html = `<p class="list-group-item">
+        var element = `<p class="list-group-item">
                         <a href="/cattle/details/${cow.fatherId}">
                             ${cow.father.givenId}
                         </a> - Father
                     </p>`;
-        $('.add-father').before(html);
+        $('.add-father').before(element);
         $('.add-father, .add-father-menu').remove();
-        showSiblings(cow.id);
+        getSiblings();
     };
 
     var showAddChild = function () {
@@ -162,7 +162,7 @@
 
     var displayChild = function (cow) {
         $(`#children option[value="${cow.id}"]`).remove();
-        var html = `<li class="list-group-item">
+        var element = `<li class="list-group-item">
                         <a href="/cattle/details/${cow.id}">
                             ${cow.givenId}
                         </a>
@@ -173,7 +173,7 @@
             $('#children-container h5').after('<ul class="list-group mb-3"></ul>');
         }
 
-        $('#children-container ul').append(html);
+        $('#children-container ul').append(element);
         $('.add-child-menu').addClass('d-none');
         $('.add-child').removeClass('d-none');
     };
@@ -186,30 +186,34 @@
             });
     };
 
-    var showSiblings = function (siblingsFromDb) {
+    var showSiblings = function(siblingsFromDb) {
+        var $emptySiblings = $('#empty-siblings');
+        var siblingsGroup = `<ul class="list-group my-3"></ul>`;
+
+        if ($emptySiblings.length > 0) {
+            $emptySiblings.after(siblingsGroup);
+            $emptySiblings.remove();
+        }
+
         var siblingsInDom = [];
         $('#siblings li.list-group-item').each(function(i, el) {
             siblingsInDom.push(parseInt($(el).attr('data-id')));
         });
-        console.log(siblingsInDom)
 
         siblingsFromDb.forEach(function(sibling) {
             if (!siblingsInDom.includes(sibling.id)) {
-                console.log(sibling.id);
                 var element = `<li class="list-group-item" data-id="${sibling.id}">
                                     <a href="/cattle/details/${sibling.id}">${sibling.givenId}</a>
                                 </li>`;
                 $('#siblings ul').append(element);
             }
         });
-    }
+    };
 
     var showAlert = function (text) {
         $('#alertLabel').text(text);
         $('#alert').modal('show');
     };
 
-    return {
-        init: init
-    }
+    return { init: init }
 }();
