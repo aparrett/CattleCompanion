@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public int? MotherId { get; set; }
         public int? FatherId { get; set; }
+        public int? ChildId { get; set; }
     }
 }

@@ -44,6 +44,24 @@ namespace CattleCompanion.Controllers.Api
                     cow.FatherId = dto.FatherId;
             }
 
+            if (dto.ChildId != null)
+            {
+                var child = _unitOfWork.Cattle.GetCow((int)dto.ChildId);
+                if (child == null)
+                    return NotFound();
+
+                if (cow.Birthday < child.Birthday)
+                {
+                    if (cow.Gender == "M")
+                        child.FatherId = cow.Id;
+                    else
+                        child.MotherId = cow.Id;
+
+                    // Return child because it is technically the model being updated.
+                    cow = child;
+                }
+            }
+
             _unitOfWork.Complete();
 
             return Ok(cow);

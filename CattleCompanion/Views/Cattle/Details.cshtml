@@ -52,7 +52,7 @@ else
     <button type="button" class="btn btn-primary btn-sm add-mother">Add Mother</button>
     <div class="form-group add-mother-menu d-none my-2">
         <select id="mothers" class="form-control mb-3">
-            @foreach (Cow cow in Model.MotherOptions)
+            @foreach (Cow cow in Model.PossibleMothers)
             {
                 <option value="@cow.Id">@cow.GivenId</option>
             }
@@ -70,7 +70,7 @@ else
     <button type="button" class="btn btn-primary btn-sm add-father">Add Father</button>
     <div class="form-group add-father-menu d-none my-2">
         <select id="fathers" class="form-control mb-3">
-            @foreach (Cow cow in Model.FatherOptions)
+            @foreach (Cow cow in Model.PossibleFathers)
             {
                 <option value="@cow.Id">@cow.GivenId</option>
             }
@@ -80,20 +80,34 @@ else
     </div>
 }
 
-<h5 class="my-3">Children</h5>
-@if (!Model.Children.Any())
-{
-    <p>Empty.</p>
-}
-else
-{
-    <ul class="list-group">
-        @foreach (var cow in Model.Children)
-        {
-            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
-        }
-    </ul>
-}
+<div id="children-container">
+    <h5 class="my-3">Children</h5>
+    @if (!Model.Children.Any())
+    {
+        <p id="empty-children">Empty.</p>
+    }
+    else
+    {
+        <ul class="list-group mb-3">
+            @foreach (var cow in Model.Children)
+            {
+                <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})</li>
+            }
+        </ul>
+    }
+
+    <button type="button" class="btn btn-primary btn-sm add-child">Add Child</button>
+    <div class="form-group add-child-menu d-none my-2">
+        <select id="children" class="form-control mb-3">
+            @foreach (Cow cow in Model.PossibleChildren)
+            {
+                <option value="@cow.Id">@cow.GivenId</option>
+            }
+        </select>
+        <button type="button" class="btn btn-primary btn-sm cancel-add-child">Cancel</button>
+        <button type="button" class="btn btn-primary btn-sm save-child">Save child</button>
+    </div>
+</div>
 
 <h5 class="my-3">Siblings</h5>
 @if (!Model.Siblings.Any())
@@ -142,6 +156,7 @@ else
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -158,6 +173,7 @@ else
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="newCow" tabindex="-1" role="dialog" aria-labelledby="newCowLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -174,6 +190,7 @@ else
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="alertLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -27,7 +27,10 @@ namespace CattleCompanion.Persistence.Repositories
 
         public IEnumerable<Cow> GetChildren(Cow cow)
         {
-            return _context.Cattle.Where(c => c.FatherId == cow.Id || c.MotherId == cow.Id).ToList();
+            return _context.Cattle
+                .Where(c => c.FatherId == cow.Id || c.MotherId == cow.Id)
+                .OrderBy(c => c.GivenId)
+                .ToList();
         }
 
         public IEnumerable<Cow> GetSiblings(Cow cow)
@@ -35,12 +38,16 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Cattle
                 .Where(c => (c.FatherId == cow.FatherId && c.Id != cow.Id && c.FatherId != null)
                             || (c.MotherId == cow.MotherId && c.Id != cow.Id && c.MotherId != null))
+                .OrderBy(c => c.GivenId)
                 .ToList();
         }
 
         public IEnumerable<Cow> GetAllByFarm(int id)
         {
-            return _context.Cattle.Where(c => c.FarmId == id).ToList();
+            return _context.Cattle
+                .Where(c => c.FarmId == id)
+                .OrderBy(c => c.GivenId)
+                .ToList();
         }
 
         public void Remove(Cow cow)

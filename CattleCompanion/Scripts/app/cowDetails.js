@@ -10,12 +10,18 @@
     var addEventHandlers = function() {
         $('#addEvent').on('click', '.add-event', createCowEvent);
         $(document).on('click', '.delete-cow', showDeleteConfirmation);
+
         $(document).on('click', '.add-mother', showAddMother);
-        $(document).on('click', '.add-father', showAddFather);
         $(document).on('click', '.cancel-add-mother', cancelAddMother);
-        $(document).on('click', '.cancel-add-father', cancelAddFather);
         $(document).on('click', '.save-mother', saveMother);
+
+        $(document).on('click', '.add-father', showAddFather);
+        $(document).on('click', '.cancel-add-father', cancelAddFather);
         $(document).on('click', '.save-father', saveFather);
+
+        $(document).on('click', '.add-child', showAddChild);
+        $(document).on('click', '.cancel-add-child', cancelAddChild);
+        $(document).on('click', '.save-child', saveChild);
     };
 
     var createCowEvent = function() {
@@ -70,6 +76,30 @@
         }
     };
 
+    var cancelAddMother = function () {
+        $('.add-mother').removeClass('d-none');
+        $('.add-mother-menu').addClass('d-none');
+    };
+
+    var saveMother = function () {
+        var id = $('#mothers').val();
+        $.post("/api/cattle/" + cowId, { motherId: id })
+            .done(displayMother)
+            .fail(function () {
+                showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
+            });
+    };
+
+    var displayMother = function (cow) {
+        var html = `<p class="list-group-item">
+                        <a href="/cattle/details/${cow.motherId}">
+                            ${cow.mother.givenId}
+                        </a> - Mother
+                    </p>`;
+        $('.add-mother').before(html);
+        $('.add-mother, .add-mother-menu').remove();
+    };
+
     var showAddFather = function () {
         if ($('#fathers option').length > 0) {
             $('.add-father').addClass('d-none');
@@ -80,42 +110,20 @@
         }
     };
 
-    var cancelAddMother = function() {
-        $('.add-mother').removeClass('d-none');
-        $('.add-mother-menu').addClass('d-none');
-    };
-
     var cancelAddFather = function() {
         $('.add-father').removeClass('d-none');
         $('.add-father-menu').addClass('d-none');
     };
 
-    var saveMother = function () {
-        var id = $('#mothers').val();
-        $.post("/api/cattle/" + cowId, { motherId: id })
-            .done(displayMother)
-            .fail(function() {
-                showAlert("We're sorry, we were unable to add the chosen mother. Please try again later.");
-            });
-    };
+
 
     var saveFather = function() {
         var id = $('#fathers').val();
         $.post("/api/cattle/" + cowId, { fatherId: id })
             .done(displayFather)
             .fail(function () {
-                showAlert("We're sorry, we were unable to add the chosen father. Please try again later.");
+                showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
             });
-    };
-
-    var displayMother = function(cow) {
-        var html = `<p class="list-group-item">
-                        <a href="/cattle/details/${cow.motherId}">
-                            ${cow.mother.givenId}
-                        </a> - Mother
-                    </p>`;
-        $('.add-mother').before(html);
-        $('.add-mother, .add-mother-menu').remove();
     };
 
     var displayFather = function(cow) {
@@ -126,6 +134,50 @@
                     </p>`;
         $('.add-father').before(html);
         $('.add-father, .add-father-menu').remove();
+    };
+
+    var showAddChild = function () {
+        if ($('#children option').length > 0) {
+            $('.add-child').addClass('d-none');
+            $('.add-child-menu').removeClass('d-none');
+        } else {
+            $('#newCowLabel').text("There are no available children. Would you like to add a new cow?");
+            $('#newCow').modal('show');
+        }
+    };
+
+    var cancelAddChild = function () {
+        $('.add-child').removeClass('d-none');
+        $('.add-child-menu').addClass('d-none');
+    };
+
+
+
+    var saveChild = function () {
+        var id = $('#children').val();
+        $.post("/api/cattle/" + cowId, { childId: id })
+            .done(displayChild)
+            .fail(function () {
+                showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
+            });
+    };
+
+    var displayChild = function (cow) {
+        $(`#children option[value="${cow.id}"]`).remove();
+        var html = `<li class="list-group-item">
+                        <a href="/cattle/details/${cow.id}">
+                            ${cow.givenId}
+                        </a>
+                    </li>`;
+
+        if ($('#children-container ul').length === 0) {
+            $('#empty-children').remove();
+            $('#children-container h5').after('<ul class="list-group mb-3"></ul>');
+        }
+
+        $('#children-container ul').append(html);
+        $('.add-child-menu').addClass('d-none');
+        $('.add-child').removeClass('d-none');
     };
 
     var showAlert = function (text) {
