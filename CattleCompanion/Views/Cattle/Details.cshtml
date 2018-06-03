@@ -45,7 +45,9 @@ new { @class = "text-small text-muted delete-cow", @data_toggle = "modal", @data
 <h5 class="my-3">Parents</h5>
 @if (Model.Cow.MotherId != null)
 {
-    <p class="list-group-item">@Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId }) - Mother</p>
+    <p class="list-group-item">
+        @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new {id = Model.Cow.MotherId}) - Mother
+    </p>
 }
 else
 {
@@ -109,20 +111,22 @@ else
     </div>
 </div>
 
-<h5 class="my-3">Siblings</h5>
-@if (!Model.Siblings.Any())
-{
-    <p>Empty.</p>
-}
-else
-{
-    <ul class="list-group my-3">
-        @foreach (var cow in Model.Siblings)
-        {
-            <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
-        }
-    </ul>
-}
+<div id="siblings">
+    <h5 class="my-3">Siblings</h5>
+    @if (!Model.Siblings.Any())
+    {
+        <p>Empty.</p>
+    }
+    else
+    {
+        <ul class="list-group my-3">
+            @foreach (var cow in Model.Siblings)
+            {
+                <li class="list-group-item" data-id="@cow.Id">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
+            }
+        </ul>
+    }
+</div>
 
 <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

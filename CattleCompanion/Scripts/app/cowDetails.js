@@ -98,6 +98,7 @@
                     </p>`;
         $('.add-mother').before(html);
         $('.add-mother, .add-mother-menu').remove();
+        getSiblings();
     };
 
     var showAddFather = function () {
@@ -114,8 +115,6 @@
         $('.add-father').removeClass('d-none');
         $('.add-father-menu').addClass('d-none');
     };
-
-
 
     var saveFather = function() {
         var id = $('#fathers').val();
@@ -134,6 +133,7 @@
                     </p>`;
         $('.add-father').before(html);
         $('.add-father, .add-father-menu').remove();
+        showSiblings(cow.id);
     };
 
     var showAddChild = function () {
@@ -150,8 +150,6 @@
         $('.add-child').removeClass('d-none');
         $('.add-child-menu').addClass('d-none');
     };
-
-
 
     var saveChild = function () {
         var id = $('#children').val();
@@ -179,6 +177,32 @@
         $('.add-child-menu').addClass('d-none');
         $('.add-child').removeClass('d-none');
     };
+
+    var getSiblings = function() {
+        $.get("/api/cattle/" + cowId + "/siblings")
+            .done(showSiblings)
+            .fail(function() {
+                showAlert("Unable to find siblings.");
+            });
+    };
+
+    var showSiblings = function (siblingsFromDb) {
+        var siblingsInDom = [];
+        $('#siblings li.list-group-item').each(function(i, el) {
+            siblingsInDom.push(parseInt($(el).attr('data-id')));
+        });
+        console.log(siblingsInDom)
+
+        siblingsFromDb.forEach(function(sibling) {
+            if (!siblingsInDom.includes(sibling.id)) {
+                console.log(sibling.id);
+                var element = `<li class="list-group-item" data-id="${sibling.id}">
+                                    <a href="/cattle/details/${sibling.id}">${sibling.givenId}</a>
+                                </li>`;
+                $('#siblings ul').append(element);
+            }
+        });
+    }
 
     var showAlert = function (text) {
         $('#alertLabel').text(text);

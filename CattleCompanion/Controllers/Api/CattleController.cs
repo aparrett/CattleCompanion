@@ -6,6 +6,7 @@ using System.Web.Routing;
 namespace CattleCompanion.Controllers.Api
 {
     [Authorize]
+    [RoutePrefix("api/cattle")]
     public class CattleController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -15,8 +16,34 @@ namespace CattleCompanion.Controllers.Api
             _unitOfWork = unitOfWork;
         }
 
+        public IHttpActionResult GetCow(int id)
+        {
+            var cow = _unitOfWork.Cattle.GetCow(id);
+            if (cow == null)
+                return NotFound();
+
+            return Ok(cow);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/{relationship}")]
+        public IHttpActionResult GetCowsInRelationship(int id, string relationship)
+        {
+            var cow = _unitOfWork.Cattle.GetCow(id);
+            if (cow == null)
+                return NotFound();
+
+            if (relationship == "siblings")
+            {
+                var siblings = _unitOfWork.Cattle.GetSiblings(cow);
+                return Ok(siblings);
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
-        [Route("api/cattle/{id}")]
+        [Route("{id:int}")]
         public IHttpActionResult Update(int id, CowDto dto)
         {
             var cow = _unitOfWork.Cattle.GetCow(id);
