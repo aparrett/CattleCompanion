@@ -129,6 +129,7 @@
             .done(function () {
                 $('#mother').remove();
                 $('.add-mother').removeClass('d-none');
+                $('#removeConfirmation .remove-yes').removeClass('remove-mother');
                 $('#removeConfirmation').modal('hide');
             })
             .fail(function() {
@@ -196,6 +197,7 @@
             .done(function () {
                 $('#father').remove();
                 $('.add-father').removeClass('d-none');
+                $('#removeConfirmation .remove-yes').removeClass('remove-father');
                 $('#removeConfirmation').modal('hide');
             })
             .fail(function () {
