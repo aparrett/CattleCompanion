@@ -1,4 +1,5 @@
 ﻿using CattleCompanion.Core.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CattleCompanion.Core.ViewModels
@@ -9,6 +10,7 @@ namespace CattleCompanion.Core.ViewModels
 
         [Required]
         [UniqueFarmColumn]
+        [DisplayName("Custom Url")]
         public string Url { get; set; }
 
         [Required]

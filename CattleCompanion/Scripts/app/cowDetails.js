@@ -91,11 +91,13 @@
     };
 
     var displayMother = function (cow) {
-        var element = `<p class="list-group-item">
-                        <a href="/cattle/details/${cow.motherId}">
-                            ${cow.mother.givenId}
-                        </a> - Mother
-                    </p>`;
+        var element = `<p id="mother" class="list-group-item d-flex" data-id="${cow.motherId}">
+                            <a href="/cattle/details/${cow.motherId}">
+                                ${cow.mother.givenId}
+                            </a>
+                            <span>&nbsp;- Mother</span>
+                            <small class="remove-item">Remove</small>
+                        </p>`;
         $('.add-mother').before(element);
         $('.add-mother, .add-mother-menu').remove();
         getSiblings();
@@ -126,11 +128,13 @@
     };
 
     var displayFather = function(cow) {
-        var element = `<p class="list-group-item">
-                        <a href="/cattle/details/${cow.fatherId}">
-                            ${cow.father.givenId}
-                        </a> - Father
-                    </p>`;
+        var element = `<p id="father" class="list-group-item d-flex" data-id="${cow.fatherId}">
+                            <a href="/cattle/details/${cow.fatherId}">
+                                ${cow.father.givenId}
+                            </a>
+                            <span>&nbsp;- Father</span>
+                            <small class="remove-item">Remove</small>
+                        </p>`;
         $('.add-father').before(element);
         $('.add-father, .add-father-menu').remove();
         getSiblings();
@@ -180,13 +184,13 @@
 
     var getSiblings = function() {
         $.get("/api/cattle/" + cowId + "/siblings")
-            .done(showSiblings)
+            .done(showNewSiblings)
             .fail(function() {
                 showAlert("Unable to find siblings.");
             });
     };
 
-    var showSiblings = function(siblingsFromDb) {
+    var showNewSiblings = function(siblingsFromDb) {
         var $emptySiblings = $('#empty-siblings');
         var siblingsGroup = `<ul class="list-group my-3"></ul>`;
 
@@ -200,9 +204,15 @@
             siblingsInDom.push(parseInt($(el).attr('data-id')));
         });
 
+        // Could also remove all siblings in DOM and just add all siblings
+        // from response but add them this way makes it more obvious which
+        // siblings are new.
         siblingsFromDb.forEach(function(sibling) {
             if (!siblingsInDom.includes(sibling.id)) {
-                var element = `<li class="list-group-item" data-id="${sibling.id}">
+                var element = `<li class="list-group-item" 
+                                    data-id="${sibling.id}" 
+                                    data-mother-id="${sibling.motherId}" 
+                                    data-father-id="${sibling.fatherId}">
                                     <a href="/cattle/details/${sibling.id}">${sibling.givenId}</a>
                                 </li>`;
                 $('#siblings ul').append(element);
@@ -215,5 +225,5 @@
         $('#alert').modal('show');
     };
 
-    return { init: init }
+    return { init: init };
 }();

@@ -123,3 +123,9 @@ nav .dropdown {
 .list-group-item + .add-father {
     margin-top: 1rem;
 }
+
+.remove-item {
+    color: #dc3545 !important;
+    margin-left: auto;
+    cursor: pointer;
+}

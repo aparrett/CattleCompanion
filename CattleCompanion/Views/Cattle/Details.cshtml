@@ -45,8 +45,10 @@ new { @class = "text-small text-muted delete-cow", @data_toggle = "modal", @data
 <h5 class="my-3">Parents</h5>
 @if (Model.Cow.MotherId != null)
 {
-    <p class="list-group-item">
-        @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new {id = Model.Cow.MotherId}) - Mother
+    <p id="mother" class="list-group-item d-flex" data-id="@Model.Cow.Mother.Id">
+        @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new {id = Model.Cow.MotherId})
+        <span>&nbsp;- Mother</span>
+        <small class="remove-item">Remove</small>
     </p>
 }
 else
@@ -65,7 +67,11 @@ else
 }
 @if (Model.Cow.FatherId != null)
 {
-    <p class="list-group-item">@Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId }) - Father</p>
+    <p id="father" class="list-group-item d-flex" data-id="@Model.Cow.FatherId">
+        @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })
+        <span>&nbsp;- Father</span>
+        <small class="remove-item">Remove</small>
+    </p>
 }
 else
 {
@@ -122,7 +128,12 @@ else
         <ul class="list-group my-3">
             @foreach (var cow in Model.Siblings)
             {
-                <li class="list-group-item" data-id="@cow.Id">@Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })</li>
+                <li class="list-group-item"
+                    data-id="@cow.Id"
+                    data-mother-id="@cow.MotherId"
+                    data-father-id="@cow.FatherId">
+                    @Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})
+                </li>
             }
         </ul>
     }
