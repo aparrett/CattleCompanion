@@ -43,34 +43,38 @@ new { @class = "text-small text-muted delete-cow", @data_toggle = "modal", @data
 <h3 class="mt-5">Family</h3>
 
 <h5 class="my-3">Parents</h5>
+
 @if (Model.Cow.MotherId != null)
 {
     <p id="mother" class="list-group-item d-flex" data-id="@Model.Cow.Mother.Id">
-        @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new {id = Model.Cow.MotherId})
+        @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId }, new { @class = "given-id" })
         <span>&nbsp;- Mother</span>
-        <small class="remove-item">Remove</small>
+        <small class="remove-item remove-mother-confirm">Remove</small>
     </p>
+    <button type="button" class="btn btn-primary btn-sm add-mother d-none">Add Mother</button>
 }
 else
 {
     <button type="button" class="btn btn-primary btn-sm add-mother">Add Mother</button>
-    <div class="form-group add-mother-menu d-none my-2">
-        <select id="mothers" class="form-control mb-3">
-            @foreach (Cow cow in Model.PossibleMothers)
-            {
-                <option value="@cow.Id">@cow.GivenId</option>
-            }
-        </select>
-        <button type="button" class="btn btn-primary btn-sm cancel-add-mother">Cancel</button>
-        <button type="button" class="btn btn-primary btn-sm save-mother">Save Mother</button>
-    </div>
 }
+
+<div class="form-group add-mother-menu d-none my-2">
+    <select id="mothers" class="form-control mb-3">
+        @foreach (Cow cow in Model.PossibleMothers)
+        {
+            <option value="@cow.Id">@cow.GivenId</option>
+        }
+    </select>
+    <button type="button" class="btn btn-primary btn-sm cancel-add-mother">Cancel</button>
+    <button type="button" class="btn btn-primary btn-sm save-mother">Save Mother</button>
+</div>
+
 @if (Model.Cow.FatherId != null)
 {
     <p id="father" class="list-group-item d-flex" data-id="@Model.Cow.FatherId">
         @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId })
         <span>&nbsp;- Father</span>
-        <small class="remove-item">Remove</small>
+        <small class="remove-item remove-father">Remove</small>
     </p>
 }
 else
@@ -99,7 +103,10 @@ else
         <ul class="list-group mb-3">
             @foreach (var cow in Model.Children)
             {
-                <li class="list-group-item">@Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})</li>
+                <li class="list-group-item d-flex">
+                    @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })
+                    <small class="remove-item remove-child">Remove</small>
+                </li>
             }
         </ul>
     }
@@ -132,7 +139,7 @@ else
                     data-id="@cow.Id"
                     data-mother-id="@cow.MotherId"
                     data-father-id="@cow.FatherId">
-                    @Html.ActionLink(cow.GivenId, "Details", new {id = cow.Id})
+                    @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })
                 </li>
             }
         </ul>
@@ -184,6 +191,23 @@ else
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 @Html.ActionLink("Yes", "Delete", new { Model.Cow.Id }, new { @class = "btn btn-primary", @role = "button" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="removeConfirmation" tabindex="-1" role="dialog" aria-labelledby="removeConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeConfirmationLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary remove-yes">Yes</button>
             </div>
         </div>
     </div>

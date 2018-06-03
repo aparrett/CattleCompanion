@@ -115,7 +115,7 @@ nav .dropdown {
 }
 
 /* Cow Details */
-.add-mother-menu + .list-group-item,
+button:not(.d-none) + .add-mother-menu + .list-group-item,
 .add-father-menu + .list-group-item {
     margin-top: 1rem;
 }

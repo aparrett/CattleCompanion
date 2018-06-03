@@ -8,12 +8,14 @@
     };
 
     var addEventHandlers = function() {
-        $('#addEvent').on('click', '.add-event', createCowEvent);
+        $(document).on('click', '.add-event', createCowEvent);
         $(document).on('click', '.delete-cow', showDeleteConfirmation);
 
         $(document).on('click', '.add-mother', showAddMother);
         $(document).on('click', '.cancel-add-mother', cancelAddMother);
         $(document).on('click', '.save-mother', saveMother);
+        $(document).on('click', '.remove-mother-confirm', showRemoveMotherConfirmation);
+        $(document).on('click', '.remove-mother', removeMother);
 
         $(document).on('click', '.add-father', showAddFather);
         $(document).on('click', '.cancel-add-father', cancelAddFather);
@@ -66,6 +68,7 @@
         $('#deleteConfirmation').modal('show');
     };
 
+
     var showAddMother = function () {
         if ($('#mothers option').length > 0) {
             $('.add-mother').addClass('d-none');
@@ -83,25 +86,55 @@
 
     var saveMother = function () {
         var id = $('#mothers').val();
-        $.post("/api/cattle/" + cowId, { motherId: id })
-            .done(displayMother)
-            .fail(function () {
-                showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
-            });
+        $.ajax({
+            type: "PUT",
+            url: "/api/cattle/" + cowId, 
+            data: { motherId: id }
+        })
+        .done(displayMother)
+        .fail(function () {
+            showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
+        });
     };
 
     var displayMother = function (cow) {
         var element = `<p id="mother" class="list-group-item d-flex" data-id="${cow.motherId}">
-                            <a href="/cattle/details/${cow.motherId}">
+                            <a class="given-id" href="/cattle/details/${cow.motherId}">
                                 ${cow.mother.givenId}
                             </a>
                             <span>&nbsp;- Mother</span>
-                            <small class="remove-item">Remove</small>
+                            <small class="remove-item remove-mother-confirm">Remove</small>
                         </p>`;
         $('.add-mother').before(element);
-        $('.add-mother, .add-mother-menu').remove();
+        $('.add-mother, .add-mother-menu').addClass("d-none");
         getSiblings();
     };
+
+    var showRemoveMotherConfirmation = function () {
+        var givenId = $('#mother .given-id').text();
+        var label = `Are you sure you want to remove ${givenId} as the mother?`;
+        $('#removeConfirmationLabel').text(label);
+        $('#removeConfirmation .remove-yes').addClass('remove-mother');
+        $('#removeConfirmation').modal('show');
+    };
+
+    var removeMother = function() {
+        $.ajax({
+            type: "PUT",
+            url: '/api/cattle/' + cowId,
+            data: { motherId: 0 }
+        })
+            .done(function () {
+                $('#mother').remove();
+                $('.add-mother').removeClass('d-none');
+                $('#removeConfirmation').modal('hide');
+            })
+            .fail(function() {
+                var message = $('#mother a').text() + " could not be removed. Please try again later";
+                showAlert(message);
+            });
+    };
+
 
     var showAddFather = function () {
         if ($('#fathers option').length > 0) {
@@ -120,11 +153,15 @@
 
     var saveFather = function() {
         var id = $('#fathers').val();
-        $.post("/api/cattle/" + cowId, { fatherId: id })
-            .done(displayFather)
-            .fail(function () {
-                showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
-            });
+        $.ajax({
+            type: "PUT",
+            url: "/api/cattle/" + cowId, 
+            data: { fatherId: id }
+        })
+        .done(displayFather)
+        .fail(function () {
+            showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
+        });
     };
 
     var displayFather = function(cow) {
@@ -139,6 +176,7 @@
         $('.add-father, .add-father-menu').remove();
         getSiblings();
     };
+
 
     var showAddChild = function () {
         if ($('#children option').length > 0) {
@@ -157,20 +195,25 @@
 
     var saveChild = function () {
         var id = $('#children').val();
-        $.post("/api/cattle/" + cowId, { childId: id })
-            .done(displayChild)
-            .fail(function () {
-                showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
-            });
+        $.ajax({
+            type: "PUT",
+            url: "/api/cattle/" + cowId,
+            data: { childId: id }
+        })
+        .done(displayChild)
+        .fail(function () {
+            showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
+        });
     };
 
     var displayChild = function (cow) {
         $(`#children option[value="${cow.id}"]`).remove();
-        var element = `<li class="list-group-item">
-                        <a href="/cattle/details/${cow.id}">
-                            ${cow.givenId}
-                        </a>
-                    </li>`;
+        var element = `<li class="list-group-item d-flex">
+                            <a href="/cattle/details/${cow.id}">
+                                ${cow.givenId}
+                            </a>
+                            <small class="remove-item remove-child">Remove</small>
+                        </li>`;
 
         if ($('#children-container ul').length === 0) {
             $('#empty-children').remove();
@@ -182,11 +225,12 @@
         $('.add-child').removeClass('d-none');
     };
 
+
     var getSiblings = function() {
         $.get("/api/cattle/" + cowId + "/siblings")
             .done(showNewSiblings)
             .fail(function() {
-                showAlert("Unable to find siblings.");
+                showAlert("Something went wrong and we were unable to retrieve the new siblings.");
             });
     };
 

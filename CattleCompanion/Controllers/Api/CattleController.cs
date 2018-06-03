@@ -42,7 +42,7 @@ namespace CattleCompanion.Controllers.Api
             return BadRequest();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id:int}")]
         public IHttpActionResult Update(int id, CowDto dto)
         {
@@ -53,12 +53,19 @@ namespace CattleCompanion.Controllers.Api
 
             if (dto.MotherId != null)
             {
-                var mother = _unitOfWork.Cattle.GetCow((int)dto.MotherId);
-                if (mother == null)
-                    return NotFound();
+                if (dto.MotherId == 0)
+                {
+                    cow.MotherId = null;
+                }
+                else
+                {
+                    var mother = _unitOfWork.Cattle.GetCow((int)dto.MotherId);
+                    if (mother == null)
+                        return NotFound();
 
-                if (cow.Id != dto.MotherId && cow.Birthday > mother.Birthday && mother.Gender == "F")
-                    cow.MotherId = dto.MotherId;
+                    if (cow.Id != dto.MotherId && cow.Birthday > mother.Birthday && mother.Gender == "F")
+                        cow.MotherId = dto.MotherId;
+                }
             }
 
             if (dto.FatherId != null)
