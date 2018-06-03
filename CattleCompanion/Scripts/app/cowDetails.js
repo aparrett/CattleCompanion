@@ -26,9 +26,6 @@
 
         $.post("/api/cowEvents/", { cowId: cowId, eventId: eventId, date: date, description: description })
             .done(function(cowEvent) {
-                if ($('.empty-events').length)
-                    $('.empty-events').remove();
-
                 var date = new Date(cowEvent.date);
                 date = date.toLocaleDateString("en-US");
 
@@ -40,6 +37,11 @@
                                 <p class="mb-1">${cowEvent.description}</p>
                             </li>`;
 
+                if ($('.empty-events').length) {
+                    $('.empty-events').remove();
+                    $('#cow-events').append("<ul class='list-group'></ul>");
+                }
+                    
                 $('#cow-events .list-group').append(html);
                 $('#addEvent').modal('hide');
 
@@ -63,7 +65,7 @@
             $('.add-mother').addClass('d-none');
             $('.add-mother-menu').removeClass('d-none');
         } else {
-            $('#alertLabel').text("There are no available mothers. Would you like to add a new cow?");
+            $('#newCowLabel').text("There are no available mothers. Would you like to add a new cow?");
             $('#newCow').modal('show');
         }
     };
@@ -73,7 +75,7 @@
             $('.add-father').addClass('d-none');
             $('.add-father-menu').removeClass('d-none');
         } else {
-            $('#alertLabel').text("There are no available fathers. Would you like to add a new cow?");
+            $('#newCowLabel').text("There are no available fathers. Would you like to add a new cow?");
             $('#newCow').modal('show');
         }
     };
@@ -93,7 +95,7 @@
         $.post("/api/cattle/" + cowId, { motherId: id })
             .done(displayMother)
             .fail(function() {
-                console.log('failed');
+                showAlert("We're sorry, we were unable to add the chosen mother. Please try again later.");
             });
     };
 
@@ -102,7 +104,7 @@
         $.post("/api/cattle/" + cowId, { fatherId: id })
             .done(displayFather)
             .fail(function () {
-                console.log('failed');
+                showAlert("We're sorry, we were unable to add the chosen father. Please try again later.");
             });
     };
 
@@ -124,6 +126,11 @@
                     </p>`;
         $('.add-father').before(html);
         $('.add-father, .add-father-menu').remove();
+    };
+
+    var showAlert = function (text) {
+        $('#alertLabel').text(text);
+        $('#alert').modal('show');
     };
 
     return {
