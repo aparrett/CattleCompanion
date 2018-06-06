@@ -131,16 +131,19 @@
             url: '/api/cattle/' + cowId,
             data: { motherId: 0 }
         })
-        .done(function () {
-            $('#mother').remove();
-            $('.add-mother').removeClass('d-none');
-            $('#removeConfirmation .remove-yes').removeClass('remove-mother');
-            $('#removeConfirmation').modal('hide');
-        })
-        .fail(function() {
-            var message = $('#mother a').text() + " could not be removed. Please try again later";
-            showAlert(message);
-        });
+            .done(function () {
+                var motherEl = $('#mother');
+                var motherId = motherEl.attr('data-id');
+                motherEl.remove();
+                $('.add-mother').removeClass('d-none');
+                $('#removeConfirmation .remove-yes').removeClass('remove-mother');
+                $('#removeConfirmation').modal('hide');
+                removeSiblings(motherId);
+            })
+            .fail(function() {
+                var message = $('#mother a').text() + " could not be removed. Please try again later";
+                showAlert(message);
+            });
     };
 
 
@@ -206,16 +209,19 @@
             url: '/api/cattle/' + cowId,
             data: { fatherId: 0 }
         })
-        .done(function () {
-            $('#father').remove();
-            $('.add-father').removeClass('d-none');
-            $('#removeConfirmation .remove-yes').removeClass('remove-father');
-            $('#removeConfirmation').modal('hide');
-        })
-        .fail(function () {
-            var message = $('#father a').text() + " could not be removed. Please try again later";
-            showAlert(message);
-        });
+            .done(function () {
+                var fatherEl = $('#father');
+                var fatherId = fatherEl.attr('data-id');
+                fatherEl.remove();
+                $('.add-father').removeClass('d-none');
+                $('#removeConfirmation .remove-yes').removeClass('remove-father');
+                $('#removeConfirmation').modal('hide');
+                removeSiblings(fatherId);
+            })
+            .fail(function () {
+                var message = $('#father a').text() + " could not be removed. Please try again later";
+                showAlert(message);
+            });
     };
 
     var showAddChild = function () {
@@ -301,6 +307,14 @@
             .fail(function() {
                 showAlert("Something went wrong and we were unable to retrieve the new siblings.");
             });
+    };
+
+    var removeSiblings = function(parentId) {
+        $('#siblings .list-group-item').each(function (i, el) {
+            var $el = $(el);
+            if ($el.attr('data-father-id') == parentId || $el.attr('data-mother-id') == parentId)
+                $el.remove();
+        });
     };
 
     var showNewSiblings = function(siblingsFromDb) {
