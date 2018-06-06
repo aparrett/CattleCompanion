@@ -1,5 +1,6 @@
 ﻿var CowDetails = function () {
     var cowId;
+    var childId;
 
     var init = function () {
         cowId = $('#cow-id').attr('data-id');
@@ -26,6 +27,10 @@
         $(document).on('click', '.add-child', showAddChild);
         $(document).on('click', '.cancel-add-child', cancelAddChild);
         $(document).on('click', '.save-child', saveChild);
+        $(document).on('click', '.remove-child-confirm', showRemoveChildConfirmation);
+        $(document).on('click', '.remove-child', removeChild);
+
+        $(document).on('click', '.remove-no', cancelRemoveConfirmation);
     };
 
     var createCowEvent = function() {
@@ -126,16 +131,16 @@
             url: '/api/cattle/' + cowId,
             data: { motherId: 0 }
         })
-            .done(function () {
-                $('#mother').remove();
-                $('.add-mother').removeClass('d-none');
-                $('#removeConfirmation .remove-yes').removeClass('remove-mother');
-                $('#removeConfirmation').modal('hide');
-            })
-            .fail(function() {
-                var message = $('#mother a').text() + " could not be removed. Please try again later";
-                showAlert(message);
-            });
+        .done(function () {
+            $('#mother').remove();
+            $('.add-mother').removeClass('d-none');
+            $('#removeConfirmation .remove-yes').removeClass('remove-mother');
+            $('#removeConfirmation').modal('hide');
+        })
+        .fail(function() {
+            var message = $('#mother a').text() + " could not be removed. Please try again later";
+            showAlert(message);
+        });
     };
 
 
@@ -188,22 +193,29 @@
         $('#removeConfirmation').modal('show');
     };
 
+    var cancelRemoveConfirmation = function() {
+        $('#removeConfirmation .remove-yes')
+            .removeClass('remove-father')
+            .removeClass('remove-mother')
+            .removeClass('remove-child');
+    };
+
     var removeFather = function () {
         $.ajax({
-                type: "PUT",
-                url: '/api/cattle/' + cowId,
-                data: { fatherId: 0 }
-            })
-            .done(function () {
-                $('#father').remove();
-                $('.add-father').removeClass('d-none');
-                $('#removeConfirmation .remove-yes').removeClass('remove-father');
-                $('#removeConfirmation').modal('hide');
-            })
-            .fail(function () {
-                var message = $('#father a').text() + " could not be removed. Please try again later";
-                showAlert(message);
-            });
+            type: "PUT",
+            url: '/api/cattle/' + cowId,
+            data: { fatherId: 0 }
+        })
+        .done(function () {
+            $('#father').remove();
+            $('.add-father').removeClass('d-none');
+            $('#removeConfirmation .remove-yes').removeClass('remove-father');
+            $('#removeConfirmation').modal('hide');
+        })
+        .fail(function () {
+            var message = $('#father a').text() + " could not be removed. Please try again later";
+            showAlert(message);
+        });
     };
 
     var showAddChild = function () {
@@ -236,11 +248,11 @@
 
     var displayChild = function (cow) {
         $(`#children option[value="${cow.id}"]`).remove();
-        var element = `<li class="list-group-item d-flex">
-                            <a href="/cattle/details/${cow.id}">
+        var element = `<li class="list-group-item d-flex" data-id="${cow.id}">
+                            <a href="/cattle/details/${cow.id}" class="given-id">
                                 ${cow.givenId}
                             </a>
-                            <small class="remove-item remove-child">Remove</small>
+                            <small class="remove-item remove-child-confirm">Remove</small>
                         </li>`;
 
         if ($('#children-container ul').length === 0) {
@@ -251,6 +263,35 @@
         $('#children-container ul').append(element);
         $('.add-child-menu').addClass('d-none');
         $('.add-child').removeClass('d-none');
+    };
+
+    var showRemoveChildConfirmation = function (e) {
+        var cowEl = $(e.target).parent();
+        childId = cowEl.attr('data-id');
+        var givenId = cowEl.children('.given-id').text();
+        var label = `Are you sure you want to remove child ${givenId}?`;
+        $('#removeConfirmationLabel').text(label);
+        $('#removeConfirmation .remove-yes').addClass('remove-child');
+        $('#removeConfirmation').modal('show');
+    };
+
+    var removeChild = function () {
+        var givenId = $('#children-container .list-group-item[data-id="' + childId + '"] a.given-id').text();
+        $.ajax({
+            type: "PUT",
+            url: '/api/cattle/' + childId,
+            data: { parentId: cowId }
+        })
+        .done(function () {
+            $('#children-container .list-group-item[data-id="' + childId + '"]').remove();
+            $('#removeConfirmation .remove-yes').removeClass('remove-child');
+            $('#removeConfirmation').modal('hide');
+            $('#children').append('<option value="' + childId + '">' + givenId + '</option>');
+        })
+        .fail(function () {
+            var message = givenId + " could not be removed. Please try again later";
+            showAlert(message);
+        });
     };
 
 

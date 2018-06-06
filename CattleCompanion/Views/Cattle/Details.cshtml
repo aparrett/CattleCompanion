@@ -105,9 +105,9 @@ else
         <ul class="list-group mb-3">
             @foreach (var cow in Model.Children)
             {
-                <li class="list-group-item d-flex">
-                    @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })
-                    <small class="remove-item remove-child">Remove</small>
+                <li class="list-group-item d-flex" data-id="@cow.Id">
+                    @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id }, new { @class = "given-id"})
+                    <small class="remove-item remove-child-confirm">Remove</small>
                 </li>
             }
         </ul>
@@ -208,7 +208,7 @@ else
                 </button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-secondary remove-no" data-dismiss="modal">No</button>
                 <button type="button" class="btn btn-primary remove-yes">Yes</button>
             </div>
         </div>

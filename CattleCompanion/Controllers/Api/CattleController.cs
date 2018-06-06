@@ -103,6 +103,16 @@ namespace CattleCompanion.Controllers.Api
                 }
             }
 
+            if (dto.ParentId != null && cow.FatherId == dto.ParentId)
+            {
+                cow.FatherId = null;
+            }
+
+            if (dto.ParentId != null && cow.MotherId == dto.ParentId)
+            {
+                cow.MotherId = null;
+            }
+
             _unitOfWork.Complete();
 
             return Ok(cow);
