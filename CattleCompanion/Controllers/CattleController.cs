@@ -55,7 +55,47 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { id = cow.Id });
         }
 
-        [Route("details/{id}")]
+        [Route("{id}/edit")]
+        public ActionResult Edit(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            var farms = _unitOfWork.UserFarms.GetFarms(userId);
+            var cow = _unitOfWork.Cattle.GetCow(id);
+
+            var viewModel = new CowFormViewModel
+            {
+                Farms = farms,
+                FarmId = cow.FarmId,
+                GivenId = cow.GivenId,
+                Birthday = cow.Birthday,
+                Gender = cow.Gender
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("edit")]
+        public ActionResult Edit(CowFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", viewModel);
+            }
+
+            var cow = _unitOfWork.Cattle.GetCow(viewModel.Id);
+
+            cow.Birthday = viewModel.Birthday;
+            cow.FarmId = viewModel.FarmId;
+            cow.GivenId = viewModel.GivenId;
+            cow.Gender = viewModel.Gender;
+
+            _unitOfWork.Complete();
+
+            return RedirectToAction("Details", new { id = cow.Id });
+        }
+
+        [Route("{id}")]
         public ActionResult Details(int id)
         {
             var cow = _unitOfWork.Cattle.GetCow(id);
@@ -81,6 +121,7 @@ namespace CattleCompanion.Controllers
 
             return View(viewModel);
         }
+
 
         public ActionResult Delete(int id)
         {
