@@ -62,6 +62,51 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { url = farm.Url });
         }
 
+        [Route("farms/edit/{id}")]
+        public ActionResult EditFarm(int id)
+        {
+            var farm = _unitOfWork.Farms.GetFarm(id);
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(User.Identity.GetUserId());
+            bool isDefault = user.DefaultFarmId == farm.Id;
+
+            var viewModel = new FarmFormViewModel
+            {
+                Id = farm.Id,
+                Name = farm.Name,
+                Url = farm.Url,
+                IsDefault = isDefault
+            };
+
+            return View("Edit", viewModel);
+        }
+
+        [HttpPost]
+        [Route("farms/edit")]
+        public ActionResult Edit(FarmFormViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View("Edit", viewModel);
+
+            var farm = _unitOfWork.Farms.GetFarm(viewModel.Id);
+
+            farm.Url = viewModel.Url;
+            farm.Name = viewModel.Name;
+
+            _unitOfWork.Complete();
+
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(User.Identity.GetUserId());
+
+            if (viewModel.IsDefault || user.DefaultFarmId == 0)
+            {
+                user.DefaultFarmId = farm.Id;
+                userManager.Update(user);
+            }
+
+            return RedirectToAction("Details", new { url = farm.Url });
+        }
+
         [Route("farm/{url}")]
         public ActionResult Details(string url)
         {

@@ -12,7 +12,7 @@ namespace CattleCompanion.Core.Models
             var context = new ApplicationDbContext();
             var farmViewModel = (FarmFormViewModel)validationContext.ObjectInstance;
             var farmFromDb = context.Farms.SingleOrDefault(f => f.Url == farmViewModel.Url);
-            return (farmFromDb == null)
+            return (farmFromDb == null || farmFromDb.Id == farmViewModel.Id)
                 ? ValidationResult.Success
                 : new ValidationResult("This url has already been taken. Please try again.");
         }

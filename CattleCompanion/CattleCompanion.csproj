@@ -416,6 +416,7 @@
     <Content Include="Views\Cattle\Details.cshtml" />
     <Content Include="Views\Farms\All.cshtml" />
     <Content Include="Views\Cattle\Edit.cshtml" />
+    <Content Include="Views\Farms\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
