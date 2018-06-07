@@ -55,8 +55,9 @@ namespace CattleCompanion.Controllers
             return RedirectToAction("Details", new { id = cow.Id });
         }
 
-        [Route("{id}/edit")]
-        public ActionResult Edit(int id)
+        [HttpGet]
+        [Route("edit/{id}")]
+        public ActionResult EditCow(int id)
         {
             var userId = User.Identity.GetUserId();
             var farms = _unitOfWork.UserFarms.GetFarms(userId);
@@ -71,7 +72,7 @@ namespace CattleCompanion.Controllers
                 Gender = cow.Gender
             };
 
-            return View(viewModel);
+            return View("Edit", viewModel);
         }
 
         [HttpPost]

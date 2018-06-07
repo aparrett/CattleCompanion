@@ -9,8 +9,8 @@
 
 <h2 id="cow-id" class="mt-5" data-id="@Model.Cow.Id">
     @Model.Cow.GivenId (@Model.Cow.Gender) 
-    @Html.ActionLink("Edit", "Edit", new { Model.Cow.Id },
-         new { @class = "text-small text-muted", href = "/cattle/" + @Model.Cow.Id + "/edit" })
+    @Html.ActionLink("Edit", "EditCow", new { id = Model.Cow.Id },
+         new { @class = "text-small text-muted" })
     @Html.ActionLink("Delete", "Delete", new {id = Model.Cow.Id},
          new {@class = "text-small text-muted delete-cow", @data_toggle = "modal", @data_target = "#deleteConfirmation"})
 </h2>
