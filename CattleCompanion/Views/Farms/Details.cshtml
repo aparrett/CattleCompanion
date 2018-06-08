@@ -9,6 +9,8 @@
     @Model.Name 
     @Html.ActionLink("Edit", "EditFarm", new { id = Model.Id },
         new { @class = "text-small text-muted" })
+    @Html.ActionLink("Delete", "Delete", new {id = Model.Id},
+        new {@class = "text-small text-muted delete-farm", @data_toggle = "modal", @data_target = "#deleteConfirmation"})
 </h2>
 @if (Model.Cattle.Any())
 {
@@ -36,5 +38,32 @@ else
 {
     <p>This farm doesn't have any cattle. Click below to add a cow to your farm!</p>
 }
+
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationLabel">Are you sure you want to delete @Model.Name?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                @Html.ActionLink("Yes", "Delete", new { Model.Id }, new { @class = "btn btn-primary", role = "button" })
+            </div>
+        </div>
+    </div>
+</div>
     
 @Html.ActionLink("Add a Cow", "Create", "Cattle", new { id = Model.Id }, new { @class = "btn btn-primary btn-sm" })
+
+<script src="~/Scripts/app/FarmDetails.js"></script>
+
+@section scripts{
+    <script>
+        $(document).on('ready', function() {
+            FarmDetails.init();
+        });
+    </script>
+}

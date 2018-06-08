@@ -3,6 +3,7 @@ using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -121,6 +122,48 @@ namespace CattleCompanion.Controllers
             }
 
             return View(farm);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var farm = _unitOfWork.Farms.GetFarm(id);
+            var userId = User.Identity.GetUserId();
+
+            if (farm == null)
+                return HttpNotFound();
+
+            var userFarms = _unitOfWork.UserFarms.GetAllByFarmId(id);
+            var authUserFarm = userFarms.SingleOrDefault(uf => uf.UserId == userId);
+            var nonAuthUserFarm = userFarms.FirstOrDefault(uf => uf.UserId != userId);
+
+            if (authUserFarm == null)
+                return new HttpUnauthorizedResult();
+
+            _unitOfWork.UserFarms.Remove(authUserFarm);
+
+            if (nonAuthUserFarm == null)
+            {
+                _unitOfWork.Farms.Remove(farm);
+            }
+
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindById(userId);
+
+            // Set another farm as the user's default if the deleted farm was their default.
+            if (user.DefaultFarmId == id)
+            {
+                var otherUserFarms = _unitOfWork.UserFarms.GetFarms(userId);
+                if (otherUserFarms.Any())
+                {
+                    var newDefault = otherUserFarms.First();
+                    user.DefaultFarmId = newDefault.Id;
+                    userManager.Update(user);
+                }
+            }
+
+            _unitOfWork.Complete();
+
+            return RedirectToAction("All");
         }
 
         [Route("farms/")]

@@ -34,5 +34,10 @@ namespace CattleCompanion.Persistence.Repositories
         {
             return _context.UserFarms.SingleOrDefault(uf => uf.FarmId == farmId && uf.UserId == userId);
         }
+
+        public void Remove(UserFarm userFarm)
+        {
+            _context.UserFarms.Remove(userFarm);
+        }
     }
 }

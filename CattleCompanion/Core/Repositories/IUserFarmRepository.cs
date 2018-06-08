@@ -9,5 +9,6 @@ namespace CattleCompanion.Core.Repositories
         IEnumerable<UserFarm> GetAllByFarmId(int farmId);
         IEnumerable<Farm> GetFarms(string userId);
         UserFarm GetUserFarm(int farmId, string userId);
+        void Remove(UserFarm userFarm);
     }
 }

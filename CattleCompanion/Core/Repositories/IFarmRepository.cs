@@ -7,5 +7,6 @@ namespace CattleCompanion.Core.Repositories
         Farm GetFarm(int id);
         Farm GetByUrl(string url);
         void Add(Farm farm);
+        void Remove(Farm farm);
     }
 }

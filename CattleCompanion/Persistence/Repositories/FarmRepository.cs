@@ -28,5 +28,10 @@ namespace CattleCompanion.Persistence.Repositories
         {
             _context.Farms.Add(farm);
         }
+
+        public void Remove(Farm farm)
+        {
+            _context.Farms.Remove(farm);
+        }
     }
 }
