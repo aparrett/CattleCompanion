@@ -8,15 +8,15 @@ namespace CattleCompanion.Core.Models
         public int Id { get; set; }
         public string GivenId { get; set; }
         public int FarmId { get; set; }
-        public virtual Farm Farm { get; set; }
+        public Farm Farm { get; set; }
         public int? MotherId { get; set; }
         public int? FatherId { get; set; }
-        public virtual Cow Mother { get; set; }
-        public virtual Cow Father { get; set; }
+        public Cow Mother { get; set; }
+        public Cow Father { get; set; }
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
-        public virtual ICollection<CowEvent> CowEvents { get; set; }
+        public ICollection<CowEvent> CowEvents { get; set; }
 
         public void DeleteMother()
         {

@@ -23,7 +23,7 @@ namespace CattleCompanion.Controllers
         {
             var userId = User.Identity.GetUserId();
             var farms = _unitOfWork.UserFarms.GetFarms(userId);
-            var viewModel = new CowFormViewModel()
+            var viewModel = new CowFormViewModel
             {
                 Farms = farms,
                 FarmId = id
@@ -99,7 +99,7 @@ namespace CattleCompanion.Controllers
         [Route("{id}")]
         public ActionResult Details(int id)
         {
-            var cow = _unitOfWork.Cattle.GetCow(id);
+            var cow = _unitOfWork.Cattle.GetCowWithEvents(id);
 
             if (cow == null)
                 return HttpNotFound();

@@ -2,6 +2,7 @@
 using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CattleCompanion.Persistence.Repositories
@@ -22,7 +23,15 @@ namespace CattleCompanion.Persistence.Repositories
 
         public Cow GetCow(int id)
         {
-            return _context.Cattle.SingleOrDefault(c => c.Id == id);
+            return _context.Cattle.Include(c => c.Farm).SingleOrDefault(c => c.Id == id);
+        }
+
+        public Cow GetCowWithEvents(int id)
+        {
+            return _context.Cattle
+                .Include(c => c.Farm)
+                .Include(c => c.CowEvents)
+                .SingleOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<Cow> GetChildren(Cow cow)
