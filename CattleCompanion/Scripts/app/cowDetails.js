@@ -9,28 +9,28 @@
     };
 
     var addEventHandlers = function() {
-        $(document).on('click', '.add-event', createCowEvent);
-        $(document).on('click', '.delete-cow', showDeleteConfirmation);
+        $('#addEvent').on('click', '.add-event', createCowEvent);
+        $('#cow-id').on('click', '.delete-cow', showDeleteConfirmation);
 
-        $(document).on('click', '.add-mother', showAddMother);
-        $(document).on('click', '.cancel-add-mother', cancelAddMother);
-        $(document).on('click', '.save-mother', saveMother);
-        $(document).on('click', '.remove-mother-confirm', showRemoveMotherConfirmation);
-        $(document).on('click', '.remove-mother', removeMother);
+        $('#parents-container').on('click', '.add-mother', showAddMother);
+        $('#parents-container').on('click', '.cancel-add-mother', cancelAddMother);
+        $('#parents-container').on('click', '.save-mother', saveMother);
+        $('#parents-container').on('click', '.remove-mother-confirm', showRemoveMotherConfirmation);
+        $('#removeConfirmation').on('click', '.remove-mother', removeMother);
 
-        $(document).on('click', '.add-father', showAddFather);
-        $(document).on('click', '.cancel-add-father', cancelAddFather);
-        $(document).on('click', '.save-father', saveFather);
-        $(document).on('click', '.remove-father-confirm', showRemoveFatherConfirmation);
-        $(document).on('click', '.remove-father', removeFather);
+        $('#parents-container').on('click', '.add-father', showAddFather);
+        $('#parents-container').on('click', '.cancel-add-father', cancelAddFather);
+        $('#parents-container').on('click', '.save-father', saveFather);
+        $('#parents-container').on('click', '.remove-father-confirm', showRemoveFatherConfirmation);
+        $('#removeConfirmation').on('click', '.remove-father', removeFather);
 
-        $(document).on('click', '.add-child', showAddChild);
-        $(document).on('click', '.cancel-add-child', cancelAddChild);
-        $(document).on('click', '.save-child', saveChild);
-        $(document).on('click', '.remove-child-confirm', showRemoveChildConfirmation);
-        $(document).on('click', '.remove-child', removeChild);
+        $('#children-container').on('click', '.add-child', showAddChild);
+        $('#children-container').on('click', '.cancel-add-child', cancelAddChild);
+        $('#children-container').on('click', '.save-child', saveChild);
+        $('#children-container').on('click', '.remove-child-confirm', showRemoveChildConfirmation);
+        $('#removeConfirmation').on('click', '.remove-child', removeChild);
 
-        $(document).on('click', '.remove-no', cancelRemoveConfirmation);
+        $('#removeConfirmation').on('click', '.remove-no', cancelRemoveConfirmation);
     };
 
     var createCowEvent = function() {
@@ -74,7 +74,6 @@
         e.preventDefault();
         $('#deleteConfirmation').modal('show');
     };
-
 
     var showAddMother = function () {
         if ($('#mothers option').length > 0) {
@@ -145,7 +144,6 @@
                 showAlert(message);
             });
     };
-
 
     var showAddFather = function () {
         if ($('#fathers option').length > 0) {
@@ -299,7 +297,6 @@
             showAlert(message);
         });
     };
-
 
     var getSiblings = function() {
         $.get("/api/cattle/" + cowId + "/siblings")
