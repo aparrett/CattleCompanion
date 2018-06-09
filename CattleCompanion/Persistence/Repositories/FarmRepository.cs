@@ -1,6 +1,7 @@
 ﻿using CattleCompanion.Core;
 using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CattleCompanion.Persistence.Repositories
@@ -21,7 +22,7 @@ namespace CattleCompanion.Persistence.Repositories
 
         public Farm GetByUrl(string url)
         {
-            return _context.Farms.SingleOrDefault(f => f.Url == url);
+            return _context.Farms.Include(f => f.Cattle).SingleOrDefault(f => f.Url == url);
         }
 
         public void Add(Farm farm)

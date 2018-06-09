@@ -23,14 +23,14 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (Cow cow in Model.Cattle)
-            {
+        @foreach (Cow cow in Model.Cattle)
+        {
             <tr>
                 <td>@Html.ActionLink(cow.GivenId, "Details", "Cattle", new { id = @cow.Id }, null)</td>
                 <td>@cow.Gender</td>
                 <td>@cow.Birthday.ToString("d")</td>
             </tr>
-            }
+        }
         </tbody>
     </table>
 }
