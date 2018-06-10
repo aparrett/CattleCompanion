@@ -113,11 +113,10 @@ namespace CattleCompanion.Controllers
             {
                 Cow = cow,
                 Events = events,
-                Children = _unitOfWork.Cattle.GetChildren(cow),
                 Siblings = siblings,
                 PossibleMothers = cowsInFarm.Where(c => c.Gender == "F" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
                 PossibleFathers = cowsInFarm.Where(c => c.Gender == "M" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
-                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && c.Parents.All(r => r.Cow1Id != cow.Id) && !siblings.Contains(c))
+                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && !siblings.Contains(c))
             };
 
             return View(viewModel);

@@ -248,12 +248,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CattleController.cs" />
     <Compile Include="Controllers\Api\CowEventsController.cs" />
+    <Compile Include="Controllers\Api\RelationshipsController.cs" />
     <Compile Include="Controllers\CattleController.cs" />
     <Compile Include="Controllers\FarmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Core\Dtos\CowDto.cs" />
     <Compile Include="Core\Dtos\CowEventDto.cs" />
+    <Compile Include="Core\Dtos\RelationshipDto.cs" />
     <Compile Include="Core\IApplicationDbContext.cs" />
     <Compile Include="Core\Models\CowDetailsViewModel.cs" />
     <Compile Include="Core\Models\CowEvent.cs" />
@@ -275,7 +277,6 @@
     <Compile Include="Persistence\EntityConfigurations\CowEventConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EventConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\FarmConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\RelationshipConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserFarmConfiguration.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.cs" />

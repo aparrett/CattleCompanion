@@ -9,7 +9,7 @@ namespace CattleCompanion.Persistence.Repositories
 {
     public class CowRepository : ICowRepository
     {
-        private IApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         public CowRepository(ApplicationDbContext context)
         {
@@ -23,7 +23,10 @@ namespace CattleCompanion.Persistence.Repositories
 
         public Cow GetCow(int id)
         {
-            return _context.Cattle.Include(c => c.Farm).SingleOrDefault(c => c.Id == id);
+            return _context.Cattle
+                .Include(c => c.Farm)
+                .Include(c => c.ParentRelationships)
+                .SingleOrDefault(c => c.Id == id);
         }
 
         public Cow GetCowWithEvents(int id)
@@ -31,20 +34,14 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Cattle
                 .Include(c => c.Farm)
                 .Include(c => c.CowEvents)
+                .Include(c => c.ParentRelationships)
+                .Include(c => c.ChildrenRelationships)
                 .SingleOrDefault(c => c.Id == id);
-        }
-
-        public IEnumerable<Cow> GetChildren(Cow cow)
-        {
-            return _context.Relationships
-                    .Where(r => r.Cow1Id == cow.Id)
-                    .Select(r => r.Cow2)
-                    .OrderBy(c => c.GivenId)
-                    .ToList();
         }
 
         public IEnumerable<Cow> GetSiblings(Cow cow)
         {
+
             var parents = _context.Relationships
                 .Where(r => r.Cow2Id == cow.Id)
                 .Select(r => r.Cow1Id);
@@ -52,9 +49,10 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Relationships
                 .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != cow.Id)
                 .Select(r => r.Cow2)
+                .Include(c => c.ParentRelationships)
+                .Include(c => c.ChildrenRelationships)
                 .OrderBy(c => c.GivenId)
                 .ToList();
-
         }
 
         public IEnumerable<Cow> GetAllByFarm(int id)
@@ -63,6 +61,12 @@ namespace CattleCompanion.Persistence.Repositories
                 .Where(c => c.FarmId == id)
                 .OrderBy(c => c.GivenId)
                 .ToList();
+        }
+
+        public IEnumerable<Cow> GetAllByUserId(string userId)
+        {
+            var farmIds = _context.UserFarms.Where(uf => uf.UserId == userId).Select(uf => uf.FarmId).ToList();
+            return _context.Cattle.Where(c => farmIds.Contains(c.FarmId)).ToList();
         }
 
         public void Remove(Cow cow)

@@ -1,5 +1,8 @@
 ﻿using CattleCompanion.Core;
+using CattleCompanion.Core.Models;
 using CattleCompanion.Core.Repositories;
+using System.Data.Entity;
+using System.Linq;
 
 namespace CattleCompanion.Persistence.Repositories
 {
@@ -10,6 +13,24 @@ namespace CattleCompanion.Persistence.Repositories
         public RelationshipRepository(IApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public void Add(Relationship relationship)
+        {
+            _context.Relationships.Add(relationship);
+        }
+
+        public Relationship GetRelationship(int cow1Id, int cow2Id)
+        {
+            return _context.Relationships
+                    .Include(r => r.Cow1)
+                    .Include(r => r.Cow2)
+                    .SingleOrDefault(r => r.Cow1Id == cow1Id && r.Cow2Id == cow2Id);
+        }
+
+        public void Delete(Relationship relationship)
+        {
+            _context.Relationships.Remove(relationship);
         }
     }
 }

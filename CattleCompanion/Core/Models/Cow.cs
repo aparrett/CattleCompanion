@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CattleCompanion.Core.Models
 {
@@ -13,7 +14,33 @@ namespace CattleCompanion.Core.Models
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
         public ICollection<CowEvent> CowEvents { get; set; }
-        public ICollection<Relationship> Parents { get; set; }
-        public ICollection<Relationship> Children { get; set; }
+        public ICollection<Relationship> ParentRelationships { get; set; }
+        public ICollection<Relationship> ChildrenRelationships { get; set; }
+
+        public Cow Mother
+        {
+            get
+            {
+                var relationship = ParentRelationships?.SingleOrDefault(p => p.Type == RelationshipType.Mother);
+                return relationship?.Cow1;
+            }
+        }
+
+        public Cow Father
+        {
+            get
+            {
+                var relationship = ParentRelationships?.SingleOrDefault(p => p.Type == RelationshipType.Father);
+                return relationship?.Cow1;
+            }
+        }
+
+        public IEnumerable<Cow> Children
+        {
+            get
+            {
+                return ChildrenRelationships?.Select(r => r.Cow2);
+            }
+        }
     }
 }

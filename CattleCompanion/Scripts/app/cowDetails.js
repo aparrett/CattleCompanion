@@ -1,6 +1,10 @@
 ﻿var CowDetails = function () {
     var cowId;
     var childId;
+    var RelationshipType = {
+        Mother: 0,
+        Father: 1
+    };
 
     var init = function () {
         cowId = $('#cow-id').attr('data-id');
@@ -93,9 +97,9 @@
     var saveMother = function () {
         var id = $('#mothers').val();
         $.ajax({
-            type: "PUT",
-            url: "/api/cattle/" + cowId, 
-            data: { motherId: id }
+            type: "POST",
+            url: "/api/relationships", 
+            data: { cow1Id: id, cow2Id: cowId, type: RelationshipType.Mother }
         })
         .done(displayMother)
         .fail(function () {
@@ -103,10 +107,11 @@
         });
     };
 
-    var displayMother = function (cow) {
-        var element = `<p id="mother" class="list-group-item d-flex" data-id="${cow.motherId}">
-                            <a class="given-id" href="/cattle/details/${cow.motherId}">
-                                ${cow.mother.givenId}
+    var displayMother = function (relationship) {
+        var mother = relationship.cow1;
+        var element = `<p id="mother" class="list-group-item d-flex" data-id="${mother.id}">
+                            <a class="given-id" href="/cattle/details/${mother.id}">
+                                ${mother.givenId}
                             </a>
                             <span>&nbsp;- Mother</span>
                             <small class="remove-item remove-mother-confirm">Remove</small>
@@ -126,9 +131,8 @@
 
     var removeMother = function() {
         $.ajax({
-            type: "PUT",
-            url: '/api/cattle/' + cowId,
-            data: { motherId: 0 }
+            type: "DELETE",
+            url: '/api/relationships/' + $('#mother').attr('data-id') + "?cow2Id=" + cowId
         })
             .done(function () {
                 var motherEl = $('#mother');
@@ -163,9 +167,9 @@
     var saveFather = function() {
         var id = $('#fathers').val();
         $.ajax({
-            type: "PUT",
-            url: "/api/cattle/" + cowId, 
-            data: { fatherId: id }
+            type: "POST",
+            url: "/api/relationships", 
+            data: { cow1Id: id, cow2Id: cowId, type: RelationshipType.Father }
         })
         .done(displayFather)
         .fail(function () {
@@ -173,10 +177,11 @@
         });
     };
 
-    var displayFather = function(cow) {
-        var element = `<p id="father" class="list-group-item d-flex" data-id="${cow.fatherId}">
-                            <a class="given-id" href="/cattle/details/${cow.fatherId}">
-                                ${cow.father.givenId}
+    var displayFather = function (relationship) {
+        var father = relationship.cow1;
+        var element = `<p id="father" class="list-group-item d-flex" data-id="${father.id}">
+                            <a class="given-id" href="/cattle/details/${father.id}">
+                                ${father.givenId}
                             </a>
                             <span>&nbsp;- Father</span>
                             <small class="remove-item remove-father-confirm">Remove</small>
@@ -203,9 +208,8 @@
 
     var removeFather = function () {
         $.ajax({
-            type: "PUT",
-            url: '/api/cattle/' + cowId,
-            data: { fatherId: 0 }
+            type: "DELETE",
+            url: '/api/relationships/' + $('#father').attr('data-id') + "?cow2Id=" + cowId
         })
             .done(function () {
                 var fatherEl = $('#father');
@@ -239,10 +243,11 @@
 
     var saveChild = function () {
         var id = $('#children').val();
+        var type = $("#cow-id").attr('data-gender') === "M" ? RelationshipType.Father : RelationshipType.Mother;
         $.ajax({
-            type: "PUT",
-            url: "/api/cattle/" + cowId,
-            data: { childId: id }
+            type: "POST",
+            url: "/api/relationships",
+            data: { cow1Id: cowId, cow2Id: id, type: type }
         })
         .done(displayChild)
         .fail(function () {
@@ -250,11 +255,12 @@
         });
     };
 
-    var displayChild = function (cow) {
-        $(`#children option[value="${cow.id}"]`).remove();
-        var element = `<li class="list-group-item d-flex" data-id="${cow.id}">
-                            <a href="/cattle/details/${cow.id}" class="given-id">
-                                ${cow.givenId}
+    var displayChild = function (relationship) {
+        var child = relationship.cow2;
+        $(`#children option[value="${child.id}"]`).remove();
+        var element = `<li class="list-group-item d-flex" data-id="${child.id}">
+                            <a href="/cattle/details/${child.id}" class="given-id">
+                                ${child.givenId}
                             </a>
                             <small class="remove-item remove-child-confirm">Remove</small>
                         </li>`;
@@ -282,9 +288,8 @@
     var removeChild = function () {
         var givenId = $('#children-container .list-group-item[data-id="' + childId + '"] a.given-id').text();
         $.ajax({
-            type: "PUT",
-            url: '/api/cattle/' + childId,
-            data: { parentId: cowId }
+            type: "DELETE",
+            url: '/api/relationships/' + cowId + "?cow2Id=" + childId
         })
         .done(function () {
             $('#children-container .list-group-item[data-id="' + childId + '"]').remove();
@@ -309,7 +314,7 @@
     var removeSiblings = function(parentId) {
         $('#siblings .list-group-item').each(function (i, el) {
             var $el = $(el);
-            if ($el.attr('data-father-id') == parentId || $el.attr('data-mother-id') == parentId)
+            if ($el.attr('data-father-id') === parentId || $el.attr('data-mother-id') === parentId)
                 $el.remove();
         });
     };
@@ -335,8 +340,8 @@
             if (!siblingsInDom.includes(sibling.id)) {
                 var element = `<li class="list-group-item" 
                                     data-id="${sibling.id}" 
-                                    data-mother-id="${sibling.motherId}" 
-                                    data-father-id="${sibling.fatherId}">
+                                    data-mother-id="${sibling.mother != null ? sibling.mother.id : ""}" 
+                                    data-father-id="${sibling.father != null ? sibling.father.id : ""}">
                                     <a href="/cattle/details/${sibling.id}">${sibling.givenId}</a>
                                 </li>`;
                 $('#siblings ul').append(element);

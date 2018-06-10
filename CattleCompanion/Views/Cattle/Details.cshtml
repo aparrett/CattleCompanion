@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 id="cow-id" class="mt-5" data-id="@Model.Cow.Id">
+<h2 id="cow-id" class="mt-5" data-id="@Model.Cow.Id" data-gender="@Model.Cow.Gender">
     @Model.Cow.GivenId (@Model.Cow.Gender) 
     @Html.ActionLink("Edit", "EditCow", new { id = Model.Cow.Id },
          new { @class = "text-small text-muted" })
@@ -47,10 +47,10 @@
 <div id="parents-container">
     <h5 class="my-3">Parents</h5>
 
-    @if (Model.Cow.MotherId != null)
+    @if (Model.Cow.Mother != null)
     {
         <p id="mother" class="list-group-item d-flex" data-id="@Model.Cow.Mother.Id">
-            @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.MotherId }, new { @class = "given-id" })
+            @Html.ActionLink(Model.Cow.Mother.GivenId, "Details", new { id = Model.Cow.Mother.Id }, new { @class = "given-id" })
             <span>&nbsp;- Mother</span>
             <small class="remove-item remove-mother-confirm">Remove</small>
         </p>
@@ -72,10 +72,10 @@
         <button type="button" class="btn btn-primary btn-sm save-mother">Save Mother</button>
     </div>
 
-    @if (Model.Cow.FatherId != null)
+    @if (Model.Cow.Father != null)
     {
-        <p id="father" class="list-group-item d-flex" data-id="@Model.Cow.FatherId">
-            @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.FatherId }, new { @class = "given-id"})
+        <p id="father" class="list-group-item d-flex" data-id="@Model.Cow.Father.Id">
+            @Html.ActionLink(Model.Cow.Father.GivenId, "Details", new { id = Model.Cow.Father.Id }, new { @class = "given-id" })
             <span>&nbsp;- Father</span>
             <small class="remove-item remove-father-confirm">Remove</small>
         </p>
@@ -100,14 +100,14 @@
 
 <div id="children-container">
     <h5 class="my-3">Children</h5>
-    @if (!Model.Children.Any())
+    @if (Model.Cow.Children == null)
     {
         <p id="empty-children">Empty.</p>
     }
     else
     {
         <ul class="list-group mb-3">
-            @foreach (var cow in Model.Children)
+            @foreach (var cow in Model.Cow.Children)
             {
                 <li class="list-group-item d-flex" data-id="@cow.Id">
                     @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id }, new { @class = "given-id"})
@@ -141,10 +141,22 @@
         <ul class="list-group my-3">
             @foreach (var cow in Model.Siblings)
             {
+                var motherIdAttr = "";
+                if (cow.Mother != null)
+                {
+                    motherIdAttr = cow.Mother.Id.ToString();
+                }
+
+                var fatherIdAttr = "";
+                if (cow.Father != null)
+                {
+                    fatherIdAttr = cow.Father.Id.ToString();
+                }
+
                 <li class="list-group-item"
                     data-id="@cow.Id"
-                    data-mother-id="@cow.MotherId"
-                    data-father-id="@cow.FatherId">
+                    data-mother-id="@motherIdAttr"
+                    data-father-id="@fatherIdAttr">
                     @Html.ActionLink(cow.GivenId, "Details", new { id = cow.Id })
                 </li>
             }

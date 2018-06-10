@@ -17,11 +17,11 @@ namespace CattleCompanion.Persistence.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(1);
 
-            HasMany(c => c.Parents)
+            HasMany(c => c.ParentRelationships)
                 .WithRequired(c => c.Cow2)
                 .WillCascadeOnDelete(false);
 
-            HasMany(c => c.Children)
+            HasMany(c => c.ChildrenRelationships)
                 .WithRequired(c => c.Cow1)
                 .WillCascadeOnDelete(false);
         }
