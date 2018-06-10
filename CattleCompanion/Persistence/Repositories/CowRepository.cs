@@ -36,19 +36,25 @@ namespace CattleCompanion.Persistence.Repositories
 
         public IEnumerable<Cow> GetChildren(Cow cow)
         {
-            return _context.Cattle
-                .Where(c => c.FatherId == cow.Id || c.MotherId == cow.Id)
-                .OrderBy(c => c.GivenId)
-                .ToList();
+            return _context.Relationships
+                    .Where(r => r.Cow1Id == cow.Id)
+                    .Select(r => r.Cow2)
+                    .OrderBy(c => c.GivenId)
+                    .ToList();
         }
 
         public IEnumerable<Cow> GetSiblings(Cow cow)
         {
-            return _context.Cattle
-                .Where(c => (c.FatherId == cow.FatherId && c.Id != cow.Id && c.FatherId != null)
-                            || (c.MotherId == cow.MotherId && c.Id != cow.Id && c.MotherId != null))
+            var parents = _context.Relationships
+                .Where(r => r.Cow2Id == cow.Id)
+                .Select(r => r.Cow1Id);
+
+            return _context.Relationships
+                .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != cow.Id)
+                .Select(r => r.Cow2)
                 .OrderBy(c => c.GivenId)
                 .ToList();
+
         }
 
         public IEnumerable<Cow> GetAllByFarm(int id)

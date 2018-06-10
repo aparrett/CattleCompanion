@@ -10,5 +10,6 @@ namespace CattleCompanion.Core
         DbSet<Cow> Cattle { get; set; }
         DbSet<Event> Events { get; set; }
         DbSet<CowEvent> CowEvents { get; set; }
+        DbSet<Relationship> Relationships { get; set; }
     }
 }

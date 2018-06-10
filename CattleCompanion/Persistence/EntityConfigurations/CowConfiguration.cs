@@ -17,13 +17,13 @@ namespace CattleCompanion.Persistence.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(1);
 
-            HasOptional(c => c.Father)
-                .WithMany()
-                .HasForeignKey(c => c.FatherId);
+            HasMany(c => c.Parents)
+                .WithRequired(c => c.Cow2)
+                .WillCascadeOnDelete(false);
 
-            HasOptional(c => c.Mother)
-                .WithMany()
-                .HasForeignKey(c => c.MotherId);
+            HasMany(c => c.Children)
+                .WithRequired(c => c.Cow1)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -9,23 +9,11 @@ namespace CattleCompanion.Core.Models
         public string GivenId { get; set; }
         public int FarmId { get; set; }
         public Farm Farm { get; set; }
-        public int? MotherId { get; set; }
-        public int? FatherId { get; set; }
-        public Cow Mother { get; set; }
-        public Cow Father { get; set; }
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
         public ICollection<CowEvent> CowEvents { get; set; }
-
-        public void DeleteMother()
-        {
-            MotherId = null;
-        }
-
-        public void DeleteFather()
-        {
-            FatherId = null;
-        }
+        public ICollection<Relationship> Parents { get; set; }
+        public ICollection<Relationship> Children { get; set; }
     }
 }

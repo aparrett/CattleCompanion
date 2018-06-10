@@ -260,6 +260,8 @@
     <Compile Include="Core\Models\Cow.cs" />
     <Compile Include="Core\Models\Event.cs" />
     <Compile Include="Core\Models\Farm.cs" />
+    <Compile Include="Core\Models\Relationship.cs" />
+    <Compile Include="Core\Models\RelationshipType.cs" />
     <Compile Include="Core\Models\UniqueFarmColumn.cs" />
     <Compile Include="Core\Models\UserFarm.cs" />
     <Compile Include="Core\Repositories\IUserFarmRepository.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="Persistence\EntityConfigurations\CowEventConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\EventConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\FarmConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\RelationshipConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserFarmConfiguration.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Persistence\Migrations\201805080343224_InitialMigration.cs" />
@@ -335,6 +338,10 @@
     <Compile Include="Persistence\Migrations\201806020320456_AddMotherFatherFKs.Designer.cs">
       <DependentUpon>201806020320456_AddMotherFatherFKs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Persistence\Migrations\201806100325361_AddRelationships.cs" />
+    <Compile Include="Persistence\Migrations\201806100325361_AddRelationships.Designer.cs">
+      <DependentUpon>201806100325361_AddRelationships.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Core\Models\ApplicationUser.cs" />
     <Compile Include="Core\ViewModels\ForgotPasswordViewModel.cs" />
@@ -356,6 +363,8 @@
     <Compile Include="Core\Repositories\ICowRepository.cs" />
     <Compile Include="Core\Repositories\IEventRepository.cs" />
     <Compile Include="Core\Repositories\ICowEventRepository.cs" />
+    <Compile Include="Core\Repositories\IRelationshipRepository.cs" />
+    <Compile Include="Persistence\Repositories\RelationshipRepository.cs" />
     <Compile Include="Persistence\Repositories\UserFarmRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -493,6 +502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201806020320456_AddMotherFatherFKs.resx">
       <DependentUpon>201806020320456_AddMotherFatherFKs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201806100325361_AddRelationships.resx">
+      <DependentUpon>201806100325361_AddRelationships.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

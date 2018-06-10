@@ -117,7 +117,7 @@ namespace CattleCompanion.Controllers
                 Siblings = siblings,
                 PossibleMothers = cowsInFarm.Where(c => c.Gender == "F" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
                 PossibleFathers = cowsInFarm.Where(c => c.Gender == "M" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
-                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && c.MotherId != cow.Id && c.FatherId != cow.Id && !siblings.Contains(c))
+                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && c.Parents.All(r => r.Cow1Id != cow.Id) && !siblings.Contains(c))
             };
 
             return View(viewModel);
@@ -135,15 +135,6 @@ namespace CattleCompanion.Controllers
             var userFarm = _unitOfWork.UserFarms.GetUserFarm(cow.FarmId, User.Identity.GetUserId());
             if (userFarm == null)
                 return new HttpUnauthorizedResult();
-
-            var children = _unitOfWork.Cattle.GetChildren(cow);
-            foreach (Cow child in children)
-            {
-                if (child.MotherId == cow.Id)
-                    child.DeleteMother();
-                else
-                    child.DeleteFather();
-            }
 
             _unitOfWork.Cattle.Remove(cow);
             _unitOfWork.Complete();

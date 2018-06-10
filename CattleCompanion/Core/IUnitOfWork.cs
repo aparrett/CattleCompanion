@@ -9,6 +9,7 @@ namespace CattleCompanion.Core
         ICowRepository Cattle { get; }
         IEventRepository Events { get; }
         ICowEventRepository CowEvents { get; }
+        IRelationshipRepository Relationships { get; }
         void Complete();
     }
 }

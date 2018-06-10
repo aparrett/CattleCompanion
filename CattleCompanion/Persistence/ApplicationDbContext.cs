@@ -13,6 +13,7 @@ namespace CattleCompanion.Persistence
         public DbSet<Cow> Cattle { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<CowEvent> CowEvents { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

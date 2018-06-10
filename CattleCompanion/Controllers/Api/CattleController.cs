@@ -46,76 +46,77 @@ namespace CattleCompanion.Controllers.Api
         [Route("{id:int}")]
         public IHttpActionResult Update(int id, CowDto dto)
         {
-            var cow = _unitOfWork.Cattle.GetCow(id);
-
-            if (cow == null)
-                return NotFound();
-
-            if (dto.MotherId != null)
-            {
-                if (dto.MotherId == 0)
-                {
-                    cow.MotherId = null;
-                }
-                else
-                {
-                    var mother = _unitOfWork.Cattle.GetCow((int)dto.MotherId);
-                    if (mother == null)
-                        return NotFound();
-
-                    if (cow.Id != dto.MotherId && cow.Birthday > mother.Birthday && mother.Gender == "F")
-                        cow.MotherId = dto.MotherId;
-                }
-            }
-
-            if (dto.FatherId != null)
-            {
-                if (dto.FatherId == 0)
-                {
-                    cow.FatherId = null;
-                }
-                else
-                {
-                    var father = _unitOfWork.Cattle.GetCow((int)dto.FatherId);
-                    if (father == null)
-                        return NotFound();
-
-                    if (cow.Id != dto.FatherId && cow.Birthday > father.Birthday && father.Gender == "M")
-                        cow.FatherId = dto.FatherId;
-                }
-            }
-
-            if (dto.ChildId != null)
-            {
-                var child = _unitOfWork.Cattle.GetCow((int)dto.ChildId);
-                if (child == null)
-                    return NotFound();
-
-                if (cow.Birthday < child.Birthday)
-                {
-                    if (cow.Gender == "M")
-                        child.FatherId = cow.Id;
-                    else
-                        child.MotherId = cow.Id;
-
-                    // Return child because it is technically the model being updated.
-                    cow = child;
-                }
-            }
-
-            if (dto.ParentId != null && cow.FatherId == dto.ParentId)
-            {
-                cow.FatherId = null;
-            }
-
-            if (dto.ParentId != null && cow.MotherId == dto.ParentId)
-            {
-                cow.MotherId = null;
-            }
-
-            _unitOfWork.Complete();
-
-            return Ok(cow);
+            //            var cow = _unitOfWork.Cattle.GetCow(id);
+            //
+            //            if (cow == null)
+            //                return NotFound();
+            //
+            //            if (dto.MotherId != null)
+            //            {
+            //                if (dto.MotherId == 0)
+            //                {
+            //                    cow.MotherId = null;
+            //                }
+            //                else
+            //                {
+            //                    var mother = _unitOfWork.Cattle.GetCow((int)dto.MotherId);
+            //                    if (mother == null)
+            //                        return NotFound();
+            //
+            //                    if (cow.Id != dto.MotherId && cow.Birthday > mother.Birthday && mother.Gender == "F")
+            //                        cow.MotherId = dto.MotherId;
+            //                }
+            //            }
+            //
+            //            if (dto.FatherId != null)
+            //            {
+            //                if (dto.FatherId == 0)
+            //                {
+            //                    cow.FatherId = null;
+            //                }
+            //                else
+            //                {
+            //                    var father = _unitOfWork.Cattle.GetCow((int)dto.FatherId);
+            //                    if (father == null)
+            //                        return NotFound();
+            //
+            //                    if (cow.Id != dto.FatherId && cow.Birthday > father.Birthday && father.Gender == "M")
+            //                        cow.FatherId = dto.FatherId;
+            //                }
+            //            }
+            //
+            //            if (dto.ChildId != null)
+            //            {
+            //                var child = _unitOfWork.Cattle.GetCow((int)dto.ChildId);
+            //                if (child == null)
+            //                    return NotFound();
+            //
+            //                if (cow.Birthday < child.Birthday)
+            //                {
+            //                    if (cow.Gender == "M")
+            //                        child.FatherId = cow.Id;
+            //                    else
+            //                        child.MotherId = cow.Id;
+            //
+            //                    // Return child because it is technically the model being updated.
+            //                    cow = child;
+            //                }
+            //            }
+            //
+            //            if (dto.ParentId != null && cow.FatherId == dto.ParentId)
+            //            {
+            //                cow.FatherId = null;
+            //            }
+            //
+            //            if (dto.ParentId != null && cow.MotherId == dto.ParentId)
+            //            {
+            //                cow.MotherId = null;
+            //            }
+            //
+            //            _unitOfWork.Complete();
+            //
+            //            return Ok(cow);
+            return Ok();
         }
     }
 }
