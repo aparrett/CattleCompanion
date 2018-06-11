@@ -14,8 +14,8 @@ namespace CattleCompanion.Core.Models
         public string Gender { get; set; }
         public bool IsDeceased { get; set; }
         public ICollection<CowEvent> CowEvents { get; set; }
-        public ICollection<Relationship> ParentRelationships { get; set; }
-        public ICollection<Relationship> ChildrenRelationships { get; set; }
+        public virtual ICollection<Relationship> ParentRelationships { get; set; }
+        public virtual ICollection<Relationship> ChildrenRelationships { get; set; }
 
         public Cow Mother
         {

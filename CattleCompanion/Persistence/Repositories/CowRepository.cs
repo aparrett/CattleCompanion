@@ -25,7 +25,6 @@ namespace CattleCompanion.Persistence.Repositories
         {
             return _context.Cattle
                 .Include(c => c.Farm)
-                .Include(c => c.ParentRelationships)
                 .SingleOrDefault(c => c.Id == id);
         }
 
@@ -34,8 +33,6 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Cattle
                 .Include(c => c.Farm)
                 .Include(c => c.CowEvents)
-                .Include(c => c.ParentRelationships)
-                .Include(c => c.ChildrenRelationships)
                 .SingleOrDefault(c => c.Id == id);
         }
 
@@ -49,8 +46,6 @@ namespace CattleCompanion.Persistence.Repositories
             return _context.Relationships
                 .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != cow.Id)
                 .Select(r => r.Cow2)
-                .Include(c => c.ParentRelationships)
-                .Include(c => c.ChildrenRelationships)
                 .OrderBy(c => c.GivenId)
                 .ToList();
         }
