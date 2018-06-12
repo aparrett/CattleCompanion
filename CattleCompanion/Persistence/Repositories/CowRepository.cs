@@ -45,15 +45,15 @@ namespace CattleCompanion.Persistence.Repositories
                 .Select(r => r.Cow1Id)
                 .ToList();
 
-            return _context.Relationships
+            var siblings = _context.Relationships
                 .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != id)
-                .GroupBy(c => c.Cow2Id)
-                .SelectMany(g => g)
                 .Select(r => r.Cow2)
                 .Include(c => c.ParentRelationships)
                 .Include(c => c.ChildrenRelationships)
                 .OrderBy(c => c.GivenId)
                 .ToList();
+
+            return siblings.GroupBy(c => c.Id).Select(g => g.First()).ToList();
         }
 
         public IEnumerable<Cow> GetAllByFarm(int id)
