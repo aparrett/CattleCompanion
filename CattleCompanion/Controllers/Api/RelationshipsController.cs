@@ -1,7 +1,9 @@
-﻿using CattleCompanion.Core;
+﻿using AutoMapper;
+using CattleCompanion.Core;
 using CattleCompanion.Core.Dtos;
 using CattleCompanion.Core.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Linq;
 using System.Web.Http;
 
@@ -21,19 +23,15 @@ namespace CattleCompanion.Controllers.Api
         [HttpPost]
         public IHttpActionResult Create(RelationshipDto dto)
         {
-            var relationship = new Relationship
-            {
-                Cow1Id = dto.Cow1Id,
-                Cow2Id = dto.Cow2Id,
-                Type = dto.Type
-            };
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var relationship = Mapper.Map<RelationshipDto, Relationship>(dto);
 
             _unitOfWork.Relationships.Add(relationship);
             _unitOfWork.Complete();
 
-            var relationshipWithCows = _unitOfWork.Relationships.GetRelationship(relationship.Cow1Id, relationship.Cow2Id);
-
-            return Ok(relationshipWithCows);
+            return Created(new Uri(Request.RequestUri + "/" + relationship.Id), dto);
         }
 
         [HttpDelete]

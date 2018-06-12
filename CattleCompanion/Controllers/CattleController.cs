@@ -99,15 +99,14 @@ namespace CattleCompanion.Controllers
         [Route("{id}")]
         public ActionResult Details(int id)
         {
-            var cow = _unitOfWork.Cattle.GetCowWithEvents(id);
+            var cow = _unitOfWork.Cattle.GetCowWithAll(id);
 
             if (cow == null)
                 return HttpNotFound();
 
             var events = _unitOfWork.Events.GetAll();
             var cowsInFarm = _unitOfWork.Cattle.GetAllByFarm(cow.FarmId);
-            var siblings = _unitOfWork.Cattle.GetSiblings(cow);
-
+            var siblings = _unitOfWork.Cattle.GetSiblings(cow.Id);
 
             var viewModel = new CowDetailsViewModel
             {

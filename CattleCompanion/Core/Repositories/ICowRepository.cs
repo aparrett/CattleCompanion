@@ -8,8 +8,8 @@ namespace CattleCompanion.Core.Repositories
         void Add(Cow cow);
         void Remove(Cow cow);
         Cow GetCow(int id);
-        Cow GetCowWithEvents(int id);
-        IEnumerable<Cow> GetSiblings(Cow cow);
+        Cow GetCowWithAll(int id);
+        IEnumerable<Cow> GetSiblings(int id);
         IEnumerable<Cow> GetAllByFarm(int id);
         IEnumerable<Cow> GetAllByUserId(string userId);
     }

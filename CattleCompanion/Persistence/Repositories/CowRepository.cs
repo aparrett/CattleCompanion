@@ -28,24 +28,30 @@ namespace CattleCompanion.Persistence.Repositories
                 .SingleOrDefault(c => c.Id == id);
         }
 
-        public Cow GetCowWithEvents(int id)
+        public Cow GetCowWithAll(int id)
         {
             return _context.Cattle
                 .Include(c => c.Farm)
                 .Include(c => c.CowEvents)
+                .Include(c => c.ParentRelationships)
+                .Include(c => c.ChildrenRelationships)
                 .SingleOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<Cow> GetSiblings(Cow cow)
+        public IEnumerable<Cow> GetSiblings(int id)
         {
-
             var parents = _context.Relationships
-                .Where(r => r.Cow2Id == cow.Id)
-                .Select(r => r.Cow1Id);
+                .Where(r => r.Cow2Id == id)
+                .Select(r => r.Cow1Id)
+                .ToList();
 
             return _context.Relationships
-                .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != cow.Id)
+                .Where(r => parents.Contains(r.Cow1Id) && r.Cow2Id != id)
+                .GroupBy(c => c.Cow2Id)
+                .SelectMany(g => g)
                 .Select(r => r.Cow2)
+                .Include(c => c.ParentRelationships)
+                .Include(c => c.ChildrenRelationships)
                 .OrderBy(c => c.GivenId)
                 .ToList();
         }

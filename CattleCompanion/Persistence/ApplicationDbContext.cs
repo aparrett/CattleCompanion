@@ -3,6 +3,7 @@ using CattleCompanion.Core.Models;
 using CattleCompanion.Persistence.EntityConfigurations;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace CattleCompanion.Persistence
 {
@@ -18,6 +19,8 @@ namespace CattleCompanion.Persistence
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Configuration.LazyLoadingEnabled = false;
+            Database.Log = sql => Debug.Write(sql);
         }
 
         public static ApplicationDbContext Create()

@@ -1,4 +1,8 @@
-﻿using CattleCompanion.Core;
+﻿using AutoMapper;
+using CattleCompanion.Core;
+using CattleCompanion.Core.Dtos;
+using CattleCompanion.Core.Models;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Routing;
 
@@ -23,12 +27,12 @@ namespace CattleCompanion.Controllers.Api
             if (cow == null)
                 return NotFound();
 
-            var siblings = _unitOfWork.Cattle.GetSiblings(cow);
+            var siblings = _unitOfWork.Cattle.GetSiblings(id);
 
             if (siblings == null)
                 return Ok();
 
-            return Ok(siblings);
+            return Ok(siblings.Select(Mapper.Map<Cow, CowDto>));
         }
 
         public IHttpActionResult GetCow(int id)
@@ -37,7 +41,7 @@ namespace CattleCompanion.Controllers.Api
             if (cow == null)
                 return NotFound();
 
-            return Ok(cow);
+            return Ok(Mapper.Map<Cow, CowDto>(cow));
         }
     }
 }

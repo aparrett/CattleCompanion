@@ -9,9 +9,13 @@ namespace CattleCompanion.App_Start
         public MappingProfile()
         {
             CreateMap<Cow, CowDto>();
-
             CreateMap<CowDto, Cow>()
                 .ForMember(c => c.Id, opt => opt.Ignore());
+
+            CreateMap<Relationship, RelationshipDto>();
+            CreateMap<RelationshipDto, Relationship>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
+
         }
     }
 }

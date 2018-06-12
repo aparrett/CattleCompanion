@@ -96,22 +96,19 @@
 
     var saveMother = function () {
         var id = $('#mothers').val();
-        $.ajax({
-            type: "POST",
-            url: "/api/relationships", 
-            data: { cow1Id: id, cow2Id: cowId, type: RelationshipType.Mother }
-        })
-        .done(displayMother)
-        .fail(function () {
-            showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
-        });
+        var givenId = $(`#mothers [value="${id}"`).text();
+
+        $.post("/api/relationships", { cow1Id: id, cow2Id: cowId, type: RelationshipType.Mother })
+            .done(relationship => displayMother(relationship, givenId))
+            .fail(function () {
+                showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
+            });
     };
 
-    var displayMother = function (relationship) {
-        var mother = relationship.cow1;
-        var element = `<p id="mother" class="list-group-item d-flex" data-id="${mother.id}">
-                            <a class="given-id" href="/cattle/details/${mother.id}">
-                                ${mother.givenId}
+    var displayMother = function (relationship, givenId) {
+        var element = `<p id="mother" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
+                            <a class="given-id" href="/cattle/${relationship.cow1Id}">
+                                ${givenId}
                             </a>
                             <span>&nbsp;- Mother</span>
                             <small class="remove-item remove-mother-confirm">Remove</small>
@@ -166,22 +163,19 @@
 
     var saveFather = function() {
         var id = $('#fathers').val();
-        $.ajax({
-            type: "POST",
-            url: "/api/relationships", 
-            data: { cow1Id: id, cow2Id: cowId, type: RelationshipType.Father }
-        })
-        .done(displayFather)
-        .fail(function () {
-            showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
-        });
+        var givenId = $(`#fathers [value="${id}"`).text();
+
+        $.post("/api/relationships", { cow1Id: id, cow2Id: cowId, type: RelationshipType.Father })
+            .done(relationship => displayFather(relationship, givenId))
+            .fail(function () {
+                showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
+            });
     };
 
-    var displayFather = function (relationship) {
-        var father = relationship.cow1;
-        var element = `<p id="father" class="list-group-item d-flex" data-id="${father.id}">
-                            <a class="given-id" href="/cattle/details/${father.id}">
-                                ${father.givenId}
+    var displayFather = function (relationship, givenId) {
+        var element = `<p id="father" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
+                            <a class="given-id" href="/cattle/${relationship.cow1Id}">
+                                ${givenId}
                             </a>
                             <span>&nbsp;- Father</span>
                             <small class="remove-item remove-father-confirm">Remove</small>
@@ -243,24 +237,21 @@
 
     var saveChild = function () {
         var id = $('#children').val();
+        var givenId = $(`#children [value="${id}"`).text();
         var type = $("#cow-id").attr('data-gender') === "M" ? RelationshipType.Father : RelationshipType.Mother;
-        $.ajax({
-            type: "POST",
-            url: "/api/relationships",
-            data: { cow1Id: cowId, cow2Id: id, type: type }
-        })
-        .done(displayChild)
-        .fail(function () {
-            showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
-        });
+
+        $.post("/api/relationships", { cow1Id: cowId, cow2Id: id, type })
+            .done(() => displayChild(id, givenId))
+            .fail(function () {
+                showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
+            });
     };
 
-    var displayChild = function (relationship) {
-        var child = relationship.cow2;
-        $(`#children option[value="${child.id}"]`).remove();
-        var element = `<li class="list-group-item d-flex" data-id="${child.id}">
-                            <a href="/cattle/details/${child.id}" class="given-id">
-                                ${child.givenId}
+    var displayChild = function (id, givenId) {
+        $(`#children option[value="${id}"]`).remove();
+        var element = `<li class="list-group-item d-flex" data-id="${id}">
+                            <a href="/cattle/${id}" class="given-id">
+                                ${givenId}
                             </a>
                             <small class="remove-item remove-child-confirm">Remove</small>
                         </li>`;
@@ -319,7 +310,8 @@
         });
     };
 
-    var showNewSiblings = function(siblingsFromDb) {
+    var showNewSiblings = function (siblingsFromDb) {
+        window.siblingsFromDb = siblingsFromDb;
         var $emptySiblings = $('#empty-siblings');
         var siblingsGroup = `<ul class="list-group my-3"></ul>`;
 
@@ -336,13 +328,24 @@
         // Could also remove all siblings in DOM and just add all siblings
         // from response but add them this way makes it more obvious which
         // siblings are new.
-        siblingsFromDb.forEach(function(sibling) {
+        siblingsFromDb.forEach(function (sibling) {
             if (!siblingsInDom.includes(sibling.id)) {
-                var element = `<li class="list-group-item" 
-                                    data-id="${sibling.id}" 
-                                    data-mother-id="${sibling.mother != null ? sibling.mother.id : ""}" 
-                                    data-father-id="${sibling.father != null ? sibling.father.id : ""}">
-                                    <a href="/cattle/details/${sibling.id}">${sibling.givenId}</a>
+                var motherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Mother);
+                var motherIdAttr = "";
+
+                if (motherRelationship) {
+                    motherIdAttr = ` data-mother-id="${motherRelationship.cow1Id}" `;
+                }
+
+                var fatherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Father);
+                var fatherIdAttr = "";
+
+                if (fatherRelationship) {
+                    fatherIdAttr = ` data-father-id="${fatherRelationship.cow1Id}" `;
+                }
+
+                var element = `<li class="list-group-item" data-id="${sibling.id}" ${motherIdAttr} ${fatherIdAttr}>
+                                    <a href="/cattle/${sibling.id}">${sibling.givenId}</a>
                                 </li>`;
                 $('#siblings ul').append(element);
             }
