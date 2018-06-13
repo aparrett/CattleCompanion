@@ -1,9 +1,9 @@
-﻿var FarmDetails = function() {
-    var init = function() {
+﻿const FarmDetails = function() {
+    const init = function() {
         $(document).on('click', '.delete-farm', showDeleteConfirmation);
     };
 
-    var showDeleteConfirmation = function(e) {
+    const showDeleteConfirmation = e => {
         e.preventDefault();
         $('#deleteConfirmation').modal('show');
     };

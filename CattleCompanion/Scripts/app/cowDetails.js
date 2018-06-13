@@ -1,18 +1,18 @@
-﻿var CowDetails = function () {
-    var cowId;
-    var childId;
-    var RelationshipType = {
+﻿const CowDetails = function(){
+    let cowId;
+    let childId;
+    let RelationshipType = {
         Mother: 0,
         Father: 1
     };
 
-    var init = function () {
+    const init = () => {
         cowId = $('#cow-id').attr('data-id');
 
         addEventHandlers();
     };
 
-    var addEventHandlers = function() {
+    const addEventHandlers = () => {
         $('#addEvent').on('click', '.add-event', createCowEvent);
         $('#cow-id').on('click', '.delete-cow', showDeleteConfirmation);
 
@@ -37,18 +37,18 @@
         $('#removeConfirmation').on('click', '.remove-no', cancelRemoveConfirmation);
     };
 
-    var createCowEvent = function() {
-        var eventId = $('#Events').val();
-        var date = $('#CowEventDate').val();
-        var description = $('#CowEventDescription').val();
-        var event = $(`#Events option[value="${eventId}"]`).text();
+    const createCowEvent = () => {
+        const eventId = $('#Events').val();
+        const date = $('#CowEventDate').val();
+        const description = $('#CowEventDescription').val();
+        const event = $(`#Events option[value="${eventId}"]`).text();
 
         $.post("/api/cowEvents/", { cowId: cowId, eventId: eventId, date: date, description: description })
             .done(function(cowEvent) {
-                var date = new Date(cowEvent.date);
+                let date = new Date(cowEvent.date);
                 date = date.toLocaleDateString("en-US");
 
-                var element = `<li class="list-group-item list-group-item-action flex-column align-items-start">
+                const element = `<li class="list-group-item list-group-item-action flex-column align-items-start">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">${event}</h5>
                                     <small>${date}</small>
@@ -70,16 +70,16 @@
             });
     };
 
-    var resetCowEventModal = function () {
+    const resetCowEventModal = () => {
         $('[name="Events"], #CowEventDate, #CowEventDescription').val("");
     };
 
-    var showDeleteConfirmation = function(e) {
+    const showDeleteConfirmation = e => {
         e.preventDefault();
         $('#deleteConfirmation').modal('show');
     };
 
-    var showAddMother = function () {
+    const showAddMother = () => {
         if ($('#mothers option').length > 0) {
             $('.add-mother').addClass('d-none');
             $('.add-mother-menu').removeClass('d-none');
@@ -89,24 +89,24 @@
         }
     };
 
-    var cancelAddMother = function () {
+    const cancelAddMother = () => {
         $('.add-mother').removeClass('d-none');
         $('.add-mother-menu').addClass('d-none');
     };
 
-    var saveMother = function () {
-        var id = $('#mothers').val();
-        var givenId = $(`#mothers [value="${id}"`).text();
+    const saveMother = () => {
+        const id = $('#mothers').val();
+        const givenId = $(`#mothers [value="${id}"`).text();
 
         $.post("/api/relationships", { cow1Id: id, cow2Id: cowId, type: RelationshipType.Mother })
-            .done(relationship => displayMother(relationship, givenId))
-            .fail(function () {
+            .done(relationship => renderMother(relationship, givenId))
+            .fail(() => {
                 showAlert("We're sorry, we were unable to add the selected mother. Please try again later.");
             });
     };
 
-    var displayMother = function (relationship, givenId) {
-        var element = `<p id="mother" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
+    const renderMother = (relationship, givenId) => {
+        const element = `<p id="mother" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
                             <a class="given-id" href="/cattle/${relationship.cow1Id}">
                                 ${givenId}
                             </a>
@@ -118,35 +118,35 @@
         getSiblings();
     };
 
-    var showRemoveMotherConfirmation = function () {
-        var givenId = $('#mother .given-id').text();
-        var label = `Are you sure you want to remove ${givenId} as the mother?`;
+    const showRemoveMotherConfirmation = () => {
+        const givenId = $('#mother .given-id').text();
+        const label = `Are you sure you want to remove ${givenId} as the mother?`;
         $('#removeConfirmationLabel').text(label);
         $('#removeConfirmation .remove-yes').addClass('remove-mother');
         $('#removeConfirmation').modal('show');
     };
 
-    var removeMother = function() {
+    const removeMother = () => {
         $.ajax({
             type: "DELETE",
             url: '/api/relationships/' + $('#mother').attr('data-id') + "?cow2Id=" + cowId
         })
-            .done(function () {
-                var motherEl = $('#mother');
-                var motherId = motherEl.attr('data-id');
+            .done(() => {
+                const motherEl = $('#mother');
+                const motherId = motherEl.attr('data-id');
                 motherEl.remove();
                 $('.add-mother').removeClass('d-none');
                 $('#removeConfirmation .remove-yes').removeClass('remove-mother');
                 $('#removeConfirmation').modal('hide');
                 removeSiblings(motherId);
             })
-            .fail(function() {
-                var message = $('#mother a').text() + " could not be removed. Please try again later";
+            .fail(() => {
+                const message = $('#mother a').text() + " could not be removed. Please try again later";
                 showAlert(message);
             });
     };
 
-    var showAddFather = function () {
+    const showAddFather = () => {
         if ($('#fathers option').length > 0) {
             $('.add-father').addClass('d-none');
             $('.add-father-menu').removeClass('d-none');
@@ -156,24 +156,24 @@
         }
     };
 
-    var cancelAddFather = function() {
+    const cancelAddFather = () => {
         $('.add-father').removeClass('d-none');
         $('.add-father-menu').addClass('d-none');
     };
 
-    var saveFather = function() {
-        var id = $('#fathers').val();
-        var givenId = $(`#fathers [value="${id}"`).text();
+    const saveFather = () => {
+        const id = $('#fathers').val();
+        const givenId = $(`#fathers [value="${id}"`).text();
 
         $.post("/api/relationships", { cow1Id: id, cow2Id: cowId, type: RelationshipType.Father })
-            .done(relationship => displayFather(relationship, givenId))
-            .fail(function () {
+            .done(relationship => renderFather(relationship, givenId))
+            .fail(() => {
                 showAlert("We're sorry, we were unable to add the selected father. Please try again later.");
             });
     };
 
-    var displayFather = function (relationship, givenId) {
-        var element = `<p id="father" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
+    const renderFather = (relationship, givenId) => {
+        const element = `<p id="father" class="list-group-item d-flex" data-id="${relationship.cow1Id}">
                             <a class="given-id" href="/cattle/${relationship.cow1Id}">
                                 ${givenId}
                             </a>
@@ -185,42 +185,42 @@
         getSiblings();
     };
 
-    var showRemoveFatherConfirmation = function () {
-        var givenId = $('#father .given-id').text();
-        var label = `Are you sure you want to remove ${givenId} as the father?`;
+    const showRemoveFatherConfirmation = () => {
+        const givenId = $('#father .given-id').text();
+        const label = `Are you sure you want to remove ${givenId} as the father?`;
         $('#removeConfirmationLabel').text(label);
         $('#removeConfirmation .remove-yes').addClass('remove-father');
         $('#removeConfirmation').modal('show');
     };
 
-    var cancelRemoveConfirmation = function() {
+    const cancelRemoveConfirmation = () => {
         $('#removeConfirmation .remove-yes')
             .removeClass('remove-father')
             .removeClass('remove-mother')
             .removeClass('remove-child');
     };
 
-    var removeFather = function () {
+    const removeFather = () => {
         $.ajax({
             type: "DELETE",
             url: '/api/relationships/' + $('#father').attr('data-id') + "?cow2Id=" + cowId
         })
-            .done(function () {
-                var fatherEl = $('#father');
-                var fatherId = fatherEl.attr('data-id');
+            .done(() => {
+                const fatherEl = $('#father');
+                const fatherId = fatherEl.attr('data-id');
                 fatherEl.remove();
                 $('.add-father').removeClass('d-none');
                 $('#removeConfirmation .remove-yes').removeClass('remove-father');
                 $('#removeConfirmation').modal('hide');
                 removeSiblings(fatherId);
             })
-            .fail(function () {
-                var message = $('#father a').text() + " could not be removed. Please try again later";
+            .fail(() => {
+                const message = $('#father a').text() + " could not be removed. Please try again later";
                 showAlert(message);
             });
     };
 
-    var showAddChild = function () {
+    const showAddChild = () => {
         if ($('#children option').length > 0) {
             $('.add-child').addClass('d-none');
             $('.add-child-menu').removeClass('d-none');
@@ -230,26 +230,26 @@
         }
     };
 
-    var cancelAddChild = function () {
+    const cancelAddChild = () => {
         $('.add-child').removeClass('d-none');
         $('.add-child-menu').addClass('d-none');
     };
 
-    var saveChild = function () {
-        var id = $('#children').val();
-        var givenId = $(`#children [value="${id}"`).text();
-        var type = $("#cow-id").attr('data-gender') === "M" ? RelationshipType.Father : RelationshipType.Mother;
+    const saveChild = () => {
+        const id = $('#children').val();
+        const givenId = $(`#children [value="${id}"`).text();
+        const type = $("#cow-id").attr('data-gender') === "M" ? RelationshipType.Father : RelationshipType.Mother;
 
         $.post("/api/relationships", { cow1Id: cowId, cow2Id: id, type })
-            .done(() => displayChild(id, givenId))
-            .fail(function () {
+            .done(() => renderChild(id, givenId))
+            .fail(() => {
                 showAlert("We're sorry, we were unable to add the selected child. Please try again later.");
             });
     };
 
-    var displayChild = function (id, givenId) {
+    const renderChild = (id, givenId) => {
         $(`#children option[value="${id}"]`).remove();
-        var element = `<li class="list-group-item d-flex" data-id="${id}">
+        const element = `<li class="list-group-item d-flex" data-id="${id}">
                             <a href="/cattle/${id}" class="given-id">
                                 ${givenId}
                             </a>
@@ -266,61 +266,60 @@
         $('.add-child').removeClass('d-none');
     };
 
-    var showRemoveChildConfirmation = function (e) {
-        var cowEl = $(e.target).parent();
+    const showRemoveChildConfirmation = (e) =>  {
+        const cowEl = $(e.target).parent();
         childId = cowEl.attr('data-id');
-        var givenId = cowEl.children('.given-id').text();
-        var label = `Are you sure you want to remove child ${givenId}?`;
+        const givenId = cowEl.children('.given-id').text();
+        const label = `Are you sure you want to remove child ${givenId}?`;
         $('#removeConfirmationLabel').text(label);
         $('#removeConfirmation .remove-yes').addClass('remove-child');
         $('#removeConfirmation').modal('show');
     };
 
-    var removeChild = function () {
-        var givenId = $('#children-container .list-group-item[data-id="' + childId + '"] a.given-id').text();
+    const removeChild = () => {
+        const givenId = $('#children-container .list-group-item[data-id="' + childId + '"] a.given-id').text();
         $.ajax({
             type: "DELETE",
             url: '/api/relationships/' + cowId + "?cow2Id=" + childId
         })
-        .done(function () {
+        .done(() => {
             $('#children-container .list-group-item[data-id="' + childId + '"]').remove();
             $('#removeConfirmation .remove-yes').removeClass('remove-child');
             $('#removeConfirmation').modal('hide');
             $('#children').append('<option value="' + childId + '">' + givenId + '</option>');
         })
-        .fail(function () {
-            var message = givenId + " could not be removed. Please try again later";
+        .fail(() => {
+            const message = givenId + " could not be removed. Please try again later";
             showAlert(message);
         });
     };
 
-    var getSiblings = function() {
+    const getSiblings = () => {
         $.get("/api/cattle/" + cowId + "/siblings")
-            .done(showNewSiblings)
-            .fail(function() {
+            .done(renderNewSiblings)
+            .fail(() => {
                 showAlert("Something went wrong and we were unable to retrieve the new siblings.");
             });
     };
 
-    var removeSiblings = function(parentId) {
+    const removeSiblings = parentId => {
         $('#siblings .list-group-item').each(function (i, el) {
-            var $el = $(el);
+            const $el = $(el);
             if ($el.attr('data-father-id') === parentId || $el.attr('data-mother-id') === parentId)
                 $el.remove();
         });
     };
 
-    var showNewSiblings = function (siblingsFromDb) {
-        window.siblingsFromDb = siblingsFromDb;
-        var $emptySiblings = $('#empty-siblings');
-        var siblingsGroup = `<ul class="list-group my-3"></ul>`;
+    const renderNewSiblings = siblingsFromDb => {
+        const $emptySiblings = $('#empty-siblings');
+        const siblingsGroup = `<ul class="list-group my-3"></ul>`;
 
         if ($emptySiblings.length > 0) {
             $emptySiblings.after(siblingsGroup);
             $emptySiblings.remove();
         }
 
-        var siblingsInDom = [];
+        const siblingsInDom = [];
         $('#siblings li.list-group-item').each(function(i, el) {
             siblingsInDom.push(parseInt($(el).attr('data-id')));
         });
@@ -330,21 +329,21 @@
         // siblings are new.
         siblingsFromDb.forEach(function (sibling) {
             if (!siblingsInDom.includes(sibling.id)) {
-                var motherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Mother);
-                var motherIdAttr = "";
+                const motherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Mother);
+                let motherIdAttr = "";
 
                 if (motherRelationship) {
                     motherIdAttr = ` data-mother-id="${motherRelationship.cow1Id}" `;
                 }
 
-                var fatherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Father);
-                var fatherIdAttr = "";
+                const fatherRelationship = sibling.parentRelationships.find(r => r.type === RelationshipType.Father);
+                let fatherIdAttr = "";
 
                 if (fatherRelationship) {
                     fatherIdAttr = ` data-father-id="${fatherRelationship.cow1Id}" `;
                 }
 
-                var element = `<li class="list-group-item" data-id="${sibling.id}" ${motherIdAttr} ${fatherIdAttr}>
+                const element = `<li class="list-group-item" data-id="${sibling.id}" ${motherIdAttr} ${fatherIdAttr}>
                                     <a href="/cattle/${sibling.id}">${sibling.givenId}</a>
                                 </li>`;
                 $('#siblings ul').append(element);
@@ -352,7 +351,7 @@
         });
     };
 
-    var showAlert = function (text) {
+    const showAlert = text => {
         $('#alertLabel').text(text);
         $('#alert').modal('show');
     };
