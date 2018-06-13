@@ -53,7 +53,7 @@
                                     <h5 class="mb-1">${event}</h5>
                                     <small>${date}</small>
                                 </div>
-                                <p class="mb-1">${cowEvent.description}</p>
+                                <p class="mb-1">${description}</p>
                             </li>`;
 
                 if ($('.empty-events').length) {
@@ -325,7 +325,7 @@
         });
 
         // Could also remove all siblings in DOM and just add all siblings
-        // from response but add them this way makes it more obvious which
+        // from response but adding them this way makes it more obvious which
         // siblings are new.
         siblingsFromDb.forEach(function (sibling) {
             if (!siblingsInDom.includes(sibling.id)) {
