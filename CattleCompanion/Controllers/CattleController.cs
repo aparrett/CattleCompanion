@@ -115,7 +115,7 @@ namespace CattleCompanion.Controllers
                 Siblings = siblings,
                 PossibleMothers = cowsInFarm.Where(c => c.Gender == "F" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
                 PossibleFathers = cowsInFarm.Where(c => c.Gender == "M" && c.Birthday < cow.Birthday && !siblings.Contains(c)),
-                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && !siblings.Contains(c))
+                PossibleChildren = cowsInFarm.Where(c => c.Birthday > cow.Birthday && !siblings.Contains(c) && !cow.Children.Contains(c))
             };
 
             return View(viewModel);
