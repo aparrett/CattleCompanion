@@ -1,7 +1,8 @@
 ﻿const CowDetails = function(){
     let cowId;
     let childId;
-    let RelationshipType = {
+
+    const RelationshipType = {
         Mother: 0,
         Father: 1
     };
