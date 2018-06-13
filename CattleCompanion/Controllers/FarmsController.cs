@@ -3,6 +3,7 @@ using CattleCompanion.Core.Models;
 using CattleCompanion.Core.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -143,6 +144,16 @@ namespace CattleCompanion.Controllers
 
             if (nonAuthUserFarm == null)
             {
+                var cattle = _unitOfWork.Cattle.GetAllByFarm(farm.Id);
+
+                // Current workaround to delete all relationships before deleting cows
+                // since onCascadeDelete will not work for relationships.
+                List<Relationship> relationships = new List<Relationship>();
+                foreach (var cow in cattle)
+                {
+                    _unitOfWork.Relationships.DeleteAll(cow.Id);
+                }
+
                 _unitOfWork.Farms.Remove(farm);
             }
 

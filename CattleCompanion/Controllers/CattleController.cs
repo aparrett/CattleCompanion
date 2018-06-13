@@ -134,6 +134,10 @@ namespace CattleCompanion.Controllers
             if (userFarm == null)
                 return new HttpUnauthorizedResult();
 
+            // Current workaround to delete all relationships before deleting cows
+            // since onCascadeDelete will not work for relationships.
+            _unitOfWork.Relationships.DeleteAll(cow.Id);
+
             _unitOfWork.Cattle.Remove(cow);
             _unitOfWork.Complete();
 

@@ -7,5 +7,6 @@ namespace CattleCompanion.Core.Repositories
         void Add(Relationship relationship);
         Relationship GetRelationship(int cow1Id, int cow2Id);
         void Delete(Relationship relationship);
+        void DeleteAll(int id);
     }
 }

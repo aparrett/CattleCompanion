@@ -32,5 +32,11 @@ namespace CattleCompanion.Persistence.Repositories
         {
             _context.Relationships.Remove(relationship);
         }
+
+        public void DeleteAll(int id)
+        {
+            var relationships = _context.Relationships.Where(r => r.Cow1Id == id || r.Cow2Id == id).ToList();
+            relationships.ForEach(r => _context.Relationships.Remove(r));
+        }
     }
 }
