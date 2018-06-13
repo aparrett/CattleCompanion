@@ -16,6 +16,9 @@ namespace CattleCompanion.App_Start
             CreateMap<RelationshipDto, Relationship>()
                 .ForMember(c => c.Id, opt => opt.Ignore());
 
+            CreateMap<CowEvent, CowEventDto>();
+            CreateMap<CowEventDto, CowEvent>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
         }
     }
 }

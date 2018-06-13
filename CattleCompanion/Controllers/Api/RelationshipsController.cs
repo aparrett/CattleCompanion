@@ -31,7 +31,7 @@ namespace CattleCompanion.Controllers.Api
             _unitOfWork.Relationships.Add(relationship);
             _unitOfWork.Complete();
 
-            return Created(new Uri(Request.RequestUri + "/" + relationship.Id), dto);
+            return Created(new Uri(Request.RequestUri + relationship.Id.ToString()), dto);
         }
 
         [HttpDelete]
@@ -49,7 +49,7 @@ namespace CattleCompanion.Controllers.Api
             _unitOfWork.Relationships.Delete(relationship);
             _unitOfWork.Complete();
 
-            return Ok();
+            return Ok("Relationship deleted successfully.");
         }
     }
 }

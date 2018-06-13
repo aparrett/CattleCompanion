@@ -1,6 +1,8 @@
-﻿using CattleCompanion.Core;
+﻿using AutoMapper;
+using CattleCompanion.Core;
 using CattleCompanion.Core.Dtos;
 using CattleCompanion.Core.Models;
+using System;
 using System.Web.Http;
 
 namespace CattleCompanion.Controllers.Api
@@ -24,20 +26,12 @@ namespace CattleCompanion.Controllers.Api
             if (dto.EventId == 0)
                 return BadRequest("Please select an event.");
 
-            var cowEvent = new CowEvent
-            {
-                CowId = dto.CowId,
-                EventId = dto.EventId,
-                Date = dto.Date
-            };
-
-            if (dto.Description != null)
-                cowEvent.Description = dto.Description;
+            var cowEvent = Mapper.Map<CowEventDto, CowEvent>(dto);
 
             _unitOfWork.CowEvents.Add(cowEvent);
             _unitOfWork.Complete();
 
-            return Ok(cowEvent);
+            return Created(new Uri(Request.RequestUri + cowEvent.Id.ToString()), dto);
         }
     }
 }
